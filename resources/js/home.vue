@@ -40,20 +40,47 @@ export default {
 
 /* CSS reset */
 
+/* Variables */
+:root {
+    --mainColor: #19A7CE;
+    --secondaryColor: #146C94;
+    --backgroundColor: #2C3333;
+    --borderRadius: 10px
+}
+
+/* Variables */
+
 /* Utility classes */
 .container {
-    margin: 2rem;
-    padding: 2rem;
+    margin: 1rem 0.5rem 1rem 0.5rem;
+    padding: 0.5rem;
+}
+
+.button {
+    background-color: var(--secondaryColor);
+    padding: 5px;
+    border-radius: 3px;
+    border-style: none;
+    border: solid 2px var(--secondaryColor);
+    cursor: pointer;
+    color: whitesmoke;
+    transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+    border: solid 2px black;
+    box-shadow: 2px 2px 5px black;
 }
 
 /* Utility classes */
+
 
 /* Stick footer on bottom */
 .wrapper {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #2C3333;
+    background-color: var(--backgroundColor);
 }
 
 footer {
@@ -69,7 +96,7 @@ footer {
 
 /* Others */
 header {
-    background-color: #19A7CE;
+    background-color: var(--mainColor);
     padding: 1rem;
     display: flex;
     justify-content: center;
@@ -84,4 +111,36 @@ header img {
     position: absolute;
     right: 1rem;
 }
-</style>
+
+.auth-form {
+    background-color: var(--mainColor);
+    border-radius: var(--borderRadius);
+}
+
+.auth-form h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+}
+
+input {
+    width: 100%;
+    height: 2rem;
+    margin: 1rem 0rem 1rem 0rem;
+    padding: 5px;
+    border-style: none;
+    border-radius: 5px;
+}
+
+/* Media Querries */
+@media only screen and (min-width: 600px) {
+    .container {
+        margin: 2rem;
+        padding: 2rem;
+    }
+}
+
+/* Media Querries */</style>
