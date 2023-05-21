@@ -2,6 +2,7 @@
     <div class="container">
         <div class="auth-form container">
             <h1>Register</h1>
+            <div class="alert">{{ alertText }}</div>
             <div>
                 <label for="nickname">Nickname:</label>
                 <input v-model="registerData.nickname" type="text" id="nickname" name="nickname">
@@ -28,6 +29,7 @@
 import buttonVue from '../components/button.vue';
 import { ref } from "vue";
 import callApi from '../../composables/callApi';
+import validateEmail from '../../composables/validateEmail'
 export default {
     components: { buttonVue },
 
@@ -39,8 +41,14 @@ export default {
             password_confirmation: '',
         })
 
-        const registration = () => {
-            const res = callApi('post', '/auth/register', registerData.value)
+        const registration = async () => {
+
+            if (registerData.value.nickname.length < 4) return showAlert('Nickname must be at least 4 characters!')
+            if (!validateEmail(registerData.value.email)) return showAlert('Email must be a valid email!')
+            if (registerData.value.password.length < 6) return showAlert('Password must be at least 6 characters!')
+            if (registerData.value.password != registerData.value.password_confirmation) return showAlert('The passwords do not match!')
+
+            const res = await callApi('post', '/auth/register', registerData.value)
 
             if (res.status == 201) {
                 console.log('sucessfull registration')
@@ -49,7 +57,15 @@ export default {
             }
         }
 
-        return { registerData, registration }
+        const alert = ref(false)
+        const alertText = ref('')
+
+        const showAlert = (text) => {
+            alert.value = true
+            alertText.value = text
+        }
+
+        return { registerData, registration, alert, alertText }
     }
 }
 </script>

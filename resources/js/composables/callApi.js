@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export default async function (method, url, data) {
+export default function (method, url, data) {
     try {
-        return await axios({
+        return axios({
             method: method,
             url: url,
             data: data,
