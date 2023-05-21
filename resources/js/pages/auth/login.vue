@@ -10,15 +10,18 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password">
             </div>
-            <button class="button">Login</button>
+            <buttonVue>Login</buttonVue>
         </div>
     </div>
 </template>
 
 <script>
+import buttonVue from '../components/button.vue';
+
+export default {
+    components: { buttonVue },
+}
 
 </script>
 
-<style>
-
-</style>
+<style></style>

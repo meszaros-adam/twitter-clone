@@ -43,7 +43,7 @@ export default {
 /* Variables */
 :root {
     --mainColor: #19A7CE;
-    --secondaryColor: #146C94;
+    --secondaryColor: #19376D;
     --backgroundColor: #2C3333;
     --borderRadius: 10px
 }
@@ -54,22 +54,6 @@ export default {
 .container {
     margin: 1rem 0.5rem 1rem 0.5rem;
     padding: 0.5rem;
-}
-
-.button {
-    background-color: var(--secondaryColor);
-    padding: 5px;
-    border-radius: 3px;
-    border-style: none;
-    border: solid 2px var(--secondaryColor);
-    cursor: pointer;
-    color: whitesmoke;
-    transition: all 0.3s ease-in-out;
-}
-
-.button:hover {
-    border: solid 2px black;
-    box-shadow: 2px 2px 5px black;
 }
 
 /* Utility classes */
