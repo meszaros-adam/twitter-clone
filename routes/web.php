@@ -19,6 +19,8 @@ Route::prefix('auth')->group(function () {
 
 
 
-Route::get('/', function () {
+Route::fallback( function () {
     return view('app');
 });
+
+
