@@ -2,7 +2,7 @@
     <div class="container">
         <div class="auth-form container">
             <h1>Register</h1>
-            <div class="alert">{{ alertText }}</div>
+            <div v-show="alert" class="alert">{{ alertText }}</div>
             <div>
                 <label for="nickname">Nickname:</label>
                 <input v-model="registerData.nickname" type="text" id="nickname" name="nickname">
@@ -63,6 +63,8 @@ export default {
         const showAlert = (text) => {
             alert.value = true
             alertText.value = text
+
+            //setTimeout(() => { alert.value = false }, 10000)
         }
 
         return { registerData, registration, alert, alertText }

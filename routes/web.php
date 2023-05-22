@@ -20,5 +20,5 @@ Route::prefix('auth')->group(function () {
 
 
 Route::get('/', function () {
-    return view('home');
+    return view('app');
 });
