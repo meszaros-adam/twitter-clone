@@ -1,8 +1,14 @@
 <template>
     <div class="wrapper">
+
         <header>
-            <h1>Twitter Clone</h1>
-            <img src="../../storage/app/images/bird-icon.png" alt="">
+
+            <router-link to="/" class="flex">
+                <h1>Twitter Clone</h1>
+                <img src="../../storage/app/images/bird-icon.png" alt="">
+            </router-link>
+
+
             <div class="auth">
                 <div>
                     <router-link to="/login">Login</router-link>
@@ -30,6 +36,4 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

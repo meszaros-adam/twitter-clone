@@ -23,6 +23,10 @@
     padding: 0.5rem;
 }
 
+.flex {
+    display: flex;
+}
+
 /* Utility classes */
 
 
@@ -94,6 +98,14 @@ input {
     color: black;
     font-weight: bold;
 }
+
+a:link,
+a:visited {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 
 /* Media Querries */
 @media only screen and (min-width: 600px) {

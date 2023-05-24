@@ -15,12 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
     Route::post('/register', [App\Http\Controllers\UsersController::class, 'register']);
+    Route::post('/login', [App\Http\Controllers\UsersController::class, 'login']);
 });
 
 
 
-Route::fallback( function () {
+Route::fallback(function () {
     return view('app');
 });
-
-
