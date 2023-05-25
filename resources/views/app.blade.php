@@ -11,7 +11,11 @@
 
 <body>
     <div id="app">
-        <app></app>
+        @if(Auth::check())
+        <app :user="{{Auth::user()}}"></app>
+        @else
+        <app :user="false"></app>
+        @endif
     </div>
     @vite('resources/js/app.js')
 </body>

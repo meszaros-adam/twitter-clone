@@ -1,22 +1,23 @@
 <template>
     <div class="wrapper">
-
         <header>
-
             <router-link to="/" class="flex">
                 <h1>Twitter Clone</h1>
                 <img src="../../storage/app/images/bird-icon.png" alt="">
             </router-link>
-
-
             <div class="auth">
-                <div>
-                    <router-link to="/login">Login</router-link>
+                <div v-if="user">
+                    <div>{{ user.nickname }}</div>
+                    <a href="/auth/logout">Logout</a>
                 </div>
-                <div>
-                    <router-link to="/register">Register</router-link>
+                <div v-else>
+                    <div>
+                        <router-link to="/login">Login</router-link>
+                    </div>
+                    <div>
+                        <router-link to="/register">Register</router-link>
+                    </div>
                 </div>
-                <div> Logout</div>
             </div>
         </header>
         <section class="content">
@@ -30,8 +31,11 @@
 
 <script>
 export default {
-    setup() {
+    props: ["user"],
+    setup(props) {
+        const user = props.user
 
+        return { user }
     }
 }
 </script>

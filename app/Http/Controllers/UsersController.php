@@ -32,11 +32,22 @@ class UsersController extends Controller
         ]);
 
         $credentials = $request->only('email', 'password');
+        $remember = $request->stayLoggedIn;
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $remember)) {
             return response('Succesfull login!', 200);
         } else {
             return response('Login failed!', 401);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

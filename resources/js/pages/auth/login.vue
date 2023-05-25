@@ -3,15 +3,21 @@
         <div class="auth-form container">
             <h1>Login</h1>
             <div v-if="alert" class="alert">{{ alertText }}</div>
-            <div>
+            <div class="input-group">
                 <label for="nickname">Email:</label>
                 <input v-model="loginData.email" type="email" id="nickname" name="nickname">
             </div>
-            <div>
+            <div class="input-group">
                 <label for="password">Password:</label>
                 <input v-model="loginData.password" type="password" id="password" name="password">
             </div>
-            <buttonVue @click="login">Login</buttonVue>
+            <div class="flex">
+                <buttonVue @click="login">Login</buttonVue>
+                <label class="checkbox">
+                    <input v-model="loginData.stayLoggedIn" type="checkbox">
+                    Stay logged in
+                </label>
+            </div>
         </div>
     </div>
 </template>
@@ -28,6 +34,7 @@ export default {
         const loginData = ref({
             email: "",
             password: "",
+            stayLoggedIn: false,
         })
 
         const login = async () => {
@@ -57,5 +64,8 @@ export default {
         return { loginData, alert, alertText, login }
     }
 }
-
 </script>
+
+<style scoped>
+
+</style>

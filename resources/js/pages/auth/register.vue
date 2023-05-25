@@ -3,19 +3,19 @@
         <div class="auth-form container">
             <h1>Register</h1>
             <div v-show="alert" class="alert">{{ alertText }}</div>
-            <div>
+            <div class="input-group">
                 <label for="nickname">Nickname:</label>
                 <input v-model="registerData.nickname" type="text" id="nickname" name="nickname">
             </div>
-            <div>
+            <div class="input-group">
                 <label for="email">Email:</label>
                 <input v-model="registerData.email" type="text" id="email" name="email">
             </div>
-            <div>
+            <div class="input-group">
                 <label for="password">Password:</label>
                 <input v-model="registerData.password" type="password" id="password" name="password">
             </div>
-            <div>
+            <div class="input-group">
                 <label for="password-confirmation">Password Confirmation:</label>
                 <input v-model="registerData.password_confirmation" type="password" id="password-confirmation"
                     name="password-confirmation">
@@ -32,7 +32,6 @@ import callApi from '../../composables/callApi';
 import validateEmail from '../../composables/validateEmail'
 export default {
     components: { buttonVue },
-
     setup() {
         const registerData = ref({
             nickname: '',

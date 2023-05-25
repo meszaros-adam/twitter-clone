@@ -25,6 +25,11 @@
 
 .flex {
     display: flex;
+
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }
 
 /* Utility classes */
@@ -77,17 +82,32 @@ header img {
     margin-bottom: 1rem;
 }
 
-label {
+.input-group label {
     display: block;
 }
 
-input {
+.input-group input {
     width: 100%;
     height: 2rem;
     margin: 1rem 0rem 1rem 0rem;
     padding: 5px;
     border-style: none;
     border-radius: 5px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
+}
+
+.checkbox input[type=checkbox] {
+    flex: none;
+    margin: 0 10px 0 10px;
+    border-style: none;
+    border-radius: 2px;
+    width: 15px;
+    height: 15px;
 }
 
 .alert {
