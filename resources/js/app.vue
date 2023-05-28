@@ -24,7 +24,7 @@
             <router-view></router-view>
         </section>
         <footer>
-            Twitter Clone &copy; 2023
+            Twitter Clone &copy; Mészáros Ádám 2023
         </footer>
     </div>
 </template>

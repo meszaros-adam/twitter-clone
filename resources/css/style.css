@@ -17,6 +17,16 @@
 
 /* Variables */
 
+/* Media Querries */
+@media only screen and (min-width: 600px) {
+    .container {
+        margin: 2rem;
+        padding: 2rem;
+    }
+}
+
+/* Media Querries */
+
 /* Utility classes */
 .container {
     margin: 1rem 0.5rem 1rem 0.5rem;
@@ -25,10 +35,17 @@
 
 .flex {
     display: flex;
-
 }
 
-.cursor-pointer{
+.justify-center{
+    justify-content: center ;
+}
+
+.flex-column{
+    flex-direction: column;
+}
+
+.cursor-pointer {
     cursor: pointer;
 }
 
@@ -126,13 +143,7 @@ a:visited {
     cursor: pointer;
 }
 
-
-/* Media Querries */
-@media only screen and (min-width: 600px) {
-    .container {
-        margin: 2rem;
-        padding: 2rem;
-    }
+textarea {
+    padding: 1rem;
+    border-radius: var(--borderRadius);
 }
-
-/* Media Querries */
