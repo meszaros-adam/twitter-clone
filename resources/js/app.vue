@@ -33,9 +33,7 @@
 export default {
     props: ["user"],
     setup(props) {
-        const user = props.user
 
-        return { user }
     }
 }
 </script>

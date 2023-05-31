@@ -2,7 +2,7 @@
     <div class="container">
         <div class="auth-form container">
             <h1>Login</h1>
-            <div v-if="alert" class="alert">{{ alertText }}</div>
+            <alertVue :text="alertText"></alertVue>
             <div class="input-group">
                 <label for="nickname">Email:</label>
                 <input v-model="loginData.email" type="email" id="nickname" name="nickname">
@@ -25,10 +25,11 @@
 <script>
 import { ref } from 'vue';
 import buttonVue from '../components/button.vue';
+import alertVue from '../components/alert.vue';
 import callApi from '../../composables/callApi';
 import validateEmail from '../../composables/validateEmail';
 export default {
-    components: { buttonVue },
+    components: { buttonVue, alertVue },
 
     setup() {
         const loginData = ref({
@@ -38,8 +39,8 @@ export default {
         })
 
         const login = async () => {
-            if (!validateEmail(loginData.value.email)) return showAlert('Email must be a valid email!')
-            if (loginData.value.password.length < 6) return showAlert('Password must be at least 6 characters!')
+            if (!validateEmail(loginData.value.email.trim())) return showAlert('Email must be a valid email!')
+            if (loginData.value.password.trim().length < 6) return showAlert('Password must be at least 6 characters!')
 
             const res = await callApi('post', '/auth/login', loginData.value)
 
@@ -50,22 +51,16 @@ export default {
             }
         }
 
-        const alert = ref(false)
         const alertText = ref('')
 
         const showAlert = (text) => {
-            alert.value = true
             alertText.value = text
-
-            //setTimeout(() => { alert.value = false }, 10000)
         }
 
 
-        return { loginData, alert, alertText, login }
+        return { loginData, alertText, login }
     }
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

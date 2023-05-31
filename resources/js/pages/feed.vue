@@ -1,24 +1,32 @@
 <template>
-    <div class="container">
-        <div class="flex justify-center">
+    <div class="centering-on-desktop">
+        <div class="textarea-container">
+            <alertVue :text="alertText"></alertVue>
             <textarea v-model="newTweet" placeholder="Write a new tweet!"> </textarea>
+            <buttonVue @click="sendTweet">Send</buttonVue>
         </div>
-        <buttonVue class="">Send</buttonVue>
     </div>
 </template>
 
 <script>
+import buttonVue from './components/button.vue'
+import alertVue from './components/alert.vue';
 import { ref } from 'vue';
 import callApi from '../composables/callApi';
-import buttonVue from './components/button.vue'
 export default {
-    components: { buttonVue },
+    components: { buttonVue, alertVue },
     setup() {
         const newTweet = ref('')
 
         const tweets = ref([])
 
+        const alertText = ref('')
+
         const sendTweet = async () => {
+
+            if (newTweet.value.trim().length < 3) alertText.value = "A tweet must be at least 3 characters!"
+            if (newTweet.value.trim().length > 140) alertText.value = "A tweet must be max 140 characters!"
+            
             const res = callApi('post', '/create_tweet', newTweet)
 
             if (res.status == 200) {
@@ -28,7 +36,7 @@ export default {
             }
         }
 
-        return { newTweet, sendTweet }
+        return { newTweet, sendTweet, alertText }
     }
 }
 </script>
