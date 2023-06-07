@@ -1,9 +1,16 @@
 <template>
-    <div class="centering-on-desktop">
-        <div class="textarea-container">
-            <alertVue :text="alertText"></alertVue>
-            <textarea v-model="newTweet" placeholder="Write a new tweet!"> </textarea>
-            <buttonVue @click="sendTweet">Send</buttonVue>
+    <div class="container">
+        <div class="centering-on-desktop">
+            <div class="textarea-container">
+                <alertVue :text="alertText"></alertVue>
+                <textarea v-model="newTweet" placeholder="Write a new tweet!"> </textarea>
+                <buttonVue @click="sendTweet">Send</buttonVue>
+            </div>
+        </div>
+        <div class="container">
+            <div v-for="tweet in tweets" class="flex justify-center">
+                {{ tweet.text }}
+            </div>
         </div>
     </div>
 </template>
@@ -26,17 +33,19 @@ export default {
 
             if (newTweet.value.trim().length < 3) alertText.value = "A tweet must be at least 3 characters!"
             if (newTweet.value.trim().length > 140) alertText.value = "A tweet must be max 140 characters!"
-            
-            const res = callApi('post', '/create_tweet', newTweet)
 
-            if (res.status == 200) {
-                tweets.value.unshift(res.data.text)
+            const res = await callApi('post', '/create_tweet', { tweet: newTweet.value })
+
+            if (res.status == 201) {
+                console.log('szia')
+                tweets.value.unshift(res.data)
+
             } else {
 
             }
         }
 
-        return { newTweet, sendTweet, alertText }
+        return { newTweet, sendTweet, alertText, tweets }
     }
 }
 </script>

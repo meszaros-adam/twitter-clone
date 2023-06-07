@@ -19,6 +19,8 @@ Route::prefix('auth')->group(function () {
     Route::get('/logout', [App\Http\Controllers\UsersController::class, 'logout']);
 });
 
+Route::post('/create_tweet', [App\Http\Controllers\TweetsController::class, 'create']);
+
 
 
 Route::fallback(function () {

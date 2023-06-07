@@ -51,9 +51,9 @@ export default {
             const res = await callApi('post', '/auth/register', registerData.value)
 
             if (res.status == 201) {
-                console.log('sucessfull registration')
+                console.log('Sucessfull registration!')
             } else {
-                console.log('registration failed')
+                console.log('Registration failed!')
             }
         }
 

@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
     <div id="app">
         @if(Auth::check())
         <app :user="{{Auth::user()}}"></app>
@@ -18,6 +19,7 @@
         @endif
     </div>
     @vite('resources/js/app.js')
+    </div>
 </body>
 
 </html>

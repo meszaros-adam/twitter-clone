@@ -47,7 +47,7 @@ export default {
             if (res.status == 200) {
                 window.location.href = '/';
             } else {
-                return showAlert(res.data.message)
+                console.log('Login failed!')
             }
         }
 
