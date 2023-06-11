@@ -5,21 +5,23 @@
                 <h1>Twitter Clone</h1>
                 <img src="../../storage/app/images/bird-icon.png" alt="">
             </router-link>
-            <div class="auth">
+            <button class="hamburger">
+                <div class="bar"></div>
+            </button>
+        </header>
+        <nav class="nav">
+            <div>
                 <div v-if="user">
-                    <div>{{ user.nickname }}</div>
+                    <a href="">{{ user.nickname }}</a>
                     <a href="/auth/logout">Logout</a>
                 </div>
                 <div v-else>
-                    <div>
-                        <router-link to="/login">Login</router-link>
-                    </div>
-                    <div>
-                        <router-link to="/register">Register</router-link>
-                    </div>
+                    <router-link to="/login">Login</router-link>
+                    <router-link to="/register">Register</router-link>
+
                 </div>
             </div>
-        </header>
+        </nav>
         <section class="content">
             <router-view></router-view>
         </section>
@@ -30,10 +32,30 @@
 </template>
 
 <script>
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router'
 export default {
     props: ["user"],
     setup(props) {
 
+        const router = useRouter();
+
+       
+        onMounted(() => {
+            const menuButton = document.querySelector('.hamburger');
+            const nav = document.querySelector('.nav');
+
+            menuButton.addEventListener('click', function () {
+                menuButton.classList.toggle('is-active')
+                nav.classList.toggle('is-active')
+            })
+
+            router.afterEach((to, from) => {
+            nav.classList.remove('is-active')
+            menuButton.classList.remove('is-active')
+        })
+
+        })
     }
 }
 </script>

@@ -24,6 +24,7 @@
 @media only screen and (min-width: 576px) {
     .container {
         margin: 2rem;
+        padding: 2rem;
     }
 
     .textarea-container {
@@ -56,7 +57,6 @@
 /* Utility classes */
 .container {
     margin: 1rem;
-
 }
 
 .flex {
@@ -104,16 +104,11 @@ header {
     padding: 1rem;
     display: flex;
     justify-content: center;
-    align-items: center;
+    z-index: 99;
 }
 
 header img {
     height: 3em;
-}
-
-.auth {
-    position: absolute;
-    right: 1rem;
 }
 
 .auth-form {
@@ -180,10 +175,78 @@ textarea {
     margin-bottom: 1rem;
 }
 
-.tweet .user{
+.tweet .user {
     margin: 0rem 0rem 1rem 0rem;
 }
 
-.tweet .text{
+.tweet .text {
     margin: 1.5rem 0rem 0.5rem 0rem;
+}
+
+.hamburger {
+    position: absolute;
+    right: 1rem;
+    display: block;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.hamburger .bar,
+.hamburger:after,
+.hamburger:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 5px;
+    background-color: whitesmoke;
+    margin: 6px 0px;
+    transition: all 0.4s;
+}
+
+.hamburger.is-active:before {
+    transform: rotate(-45deg) translate(-9px, 8px);
+}
+
+.hamburger.is-active:after {
+    transform: rotate(45deg) translate(-8px, -7px);
+}
+
+.hamburger.is-active .bar {
+    opacity: 0;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100vh;
+    display: block;
+    z-index: 98;
+    background-color: var(--backgroundColor);
+    padding-top: 120px;
+    transition: 0.4s;
+}
+
+nav.is-active {
+    left: 0;
+}
+
+nav a {
+    display: block;
+    text-align: center;
+    margin: 1rem auto 16px;
+    padding: 1rem;
+    background-color: var(--mainColor);
+    width: 100%;
+    max-width: 300px;
+}
+
+nav a:hover {
+    background-color: #0fc4f7;
 }
