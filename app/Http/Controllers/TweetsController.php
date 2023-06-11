@@ -14,9 +14,11 @@ class TweetsController extends Controller
             'tweet' => 'min:3|max:140'
         ]);
 
-        return Tweet::create([
+        $tweet = Tweet::create([
             'text' => $request->tweet,
             'user_id' => Auth::user()->id,
-        ]); 
+        ]);
+
+        return $tweet->load('user');
     }
 }

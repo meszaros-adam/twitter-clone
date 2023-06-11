@@ -1,16 +1,24 @@
 <template>
-    <div class="container">
-        <div class="centering-on-desktop">
-            <div class="textarea-container">
-                <alertVue :text="alertText"></alertVue>
-                <textarea v-model="newTweet" placeholder="Write a new tweet!"> </textarea>
+    <div class="centering-on-desktop">
+        <div class="container">
+            <alertVue :text="alertText"></alertVue>
+            <textarea v-model="newTweet" placeholder="Write a new tweet!"> </textarea>
+            <div>
                 <buttonVue @click="sendTweet">Send</buttonVue>
             </div>
         </div>
         <div class="container">
-            <div v-for="tweet in tweets" class="flex justify-center">
-                {{ tweet.text }}
-            </div>
+            <transition-group name="tweets" tag="ul">
+                <div v-for="tweet in tweets" :key="tweet.id" class="tweet">
+                    <div class="user">
+                        {{ tweet.user.nickname }}
+                    </div>
+                    <hr>
+                    <div class="text">
+                        {{ tweet.text }}
+                    </div>
+                </div>
+            </transition-group>
         </div>
     </div>
 </template>
@@ -37,11 +45,12 @@ export default {
             const res = await callApi('post', '/create_tweet', { tweet: newTweet.value })
 
             if (res.status == 201) {
-                console.log('szia')
                 tweets.value.unshift(res.data)
 
-            } else {
+                newTweet.value = ""
 
+            } else {
+                console.log('Failed to send the tweet!')
             }
         }
 
@@ -49,4 +58,25 @@ export default {
     }
 }
 </script>
+
+<style>
+.tweets-move,
+.tweets-enter-active,
+.tweets-leave-active {
+    transition: all 1s ease;
+}
+
+.tweets-enter-from {
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+.tweets-leave-to {
+    opacity: 0;
+}
+
+.tweets-leave-active {
+  position: absolute;
+}
+</style>
 
