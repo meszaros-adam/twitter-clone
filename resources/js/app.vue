@@ -40,7 +40,7 @@ export default {
 
         const router = useRouter();
 
-       
+        //hamburger menu       
         onMounted(() => {
             const menuButton = document.querySelector('.hamburger');
             const nav = document.querySelector('.nav');
@@ -50,10 +50,11 @@ export default {
                 nav.classList.toggle('is-active')
             })
 
+            //inactivate hamburger menu after route change 
             router.afterEach((to, from) => {
-            nav.classList.remove('is-active')
-            menuButton.classList.remove('is-active')
-        })
+                nav.classList.remove('is-active')
+                menuButton.classList.remove('is-active')
+            })
 
         })
     }
