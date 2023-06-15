@@ -45,6 +45,7 @@ export default {
             const menuButton = document.querySelector('.hamburger');
             const nav = document.querySelector('.nav');
 
+            //adding is-active to class list
             menuButton.addEventListener('click', function () {
                 menuButton.classList.toggle('is-active')
                 nav.classList.toggle('is-active')
