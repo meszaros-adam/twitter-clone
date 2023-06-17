@@ -50,4 +50,9 @@ class UsersController extends Controller
 
         return redirect('/login');
     }
+
+    public function getUser(Request $request)
+    {
+        return User::find($request->id);
+    }
 }

@@ -12,7 +12,9 @@
         <nav class="nav">
             <div>
                 <div v-if="user">
-                    <a href="">{{ user.nickname }}</a>
+                    <router-link :to="{ name: 'Profile', params: { id: user.id } }">
+                        {{ user.nickname }}
+                    </router-link>
                     <a href="/auth/logout">Logout</a>
                 </div>
                 <div v-else>
