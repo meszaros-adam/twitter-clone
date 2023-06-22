@@ -1,7 +1,13 @@
 <template>
     <div class="tweet">
-        <div class="user">
-            {{ tweet.user.nickname }}
+        <div class="user_and_date">
+            <div>
+                {{ tweet.user.nickname }}
+            </div>
+            <div>
+                {{ tweet.created_at }}
+            </div>
+
         </div>
         <hr>
         <div class="text">
@@ -29,8 +35,10 @@ export default {
     margin-bottom: 1rem;
 }
 
-.tweet .user {
+.tweet .user_and_date {
     margin: 0rem 0rem 1rem 0rem;
+    display: flex;
+    justify-content: space-between;
 }
 
 .tweet .text {
