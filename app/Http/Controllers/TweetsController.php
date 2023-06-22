@@ -21,7 +21,8 @@ class TweetsController extends Controller
 
         return $tweet->load('user');
     }
-    public function getByUser(Request $request){
-        return Tweet::where('user_id', $request->user_id)->get();
+    public function getByUser(Request $request)
+    {
+        return Tweet::where('user_id', $request->user_id)->orderBy('created_at')->paginate(10);
     }
 }

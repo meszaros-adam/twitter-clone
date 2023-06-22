@@ -9,15 +9,9 @@
         </div>
         <div class="container">
             <transition-group name="tweets" tag="ul">
-                <div v-for="tweet in tweets" :key="tweet.id" class="tweet">
-                    <div class="user">
-                        {{ tweet.user.nickname }}
-                    </div>
-                    <hr>
-                    <div class="text">
-                        {{ tweet.text }}
-                    </div>
-                </div>
+                <tweetVue v-for="tweet in tweets" :key="tweet.id" :tweet="tweet">
+
+                </tweetVue>
             </transition-group>
         </div>
     </div>
@@ -26,10 +20,11 @@
 <script>
 import buttonVue from './components/button.vue'
 import alertVue from './components/alert.vue';
+import tweetVue from './components/tweet.vue';
 import { ref } from 'vue';
 import callApi from '../composables/callApi';
 export default {
-    components: { buttonVue, alertVue },
+    components: { buttonVue, alertVue, tweetVue },
     setup() {
         const newTweet = ref('')
 
@@ -76,7 +71,7 @@ export default {
 }
 
 .tweets-leave-active {
-  position: absolute;
+    position: absolute;
 }
 </style>
 

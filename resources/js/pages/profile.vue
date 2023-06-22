@@ -1,23 +1,18 @@
 <template>
     <div class="container">
         <h1 v-if="profile"> {{ profile.nickname }}</h1>
-        <div v-for="tweet in tweets" :key="tweet.id" class="tweet">
-            <div class="user">
-                {{ tweet.user.nickname }}
-            </div>
-            <hr>
-            <div class="text">
-                {{ tweet.text }}
-            </div>
-        </div>
+        <tweetVue v-for="tweet in tweets" :key="tweet.id" :tweet="tweet">
+        </tweetVue>
     </div>
 </template>
 
 <script>
 import { useRoute } from 'vue-router'
 import callApi from '../composables/callApi'
+import tweetVue from './components/tweet.vue'
 import { ref } from 'vue'
 export default {
+    components: { tweetVue },
     setup() {
         const route = useRoute()
 
@@ -31,22 +26,29 @@ export default {
 
             }
         }
+        getProfile()
 
         const tweets = ref([])
+        let page = 1
         const getTweetsByProfile = async () => {
 
-            const res = await callApi('get', `/get_tweets_by_user?user_id=${route.params.id}`)
+            const res = await callApi('get', `/get_tweets_by_user?user_id=${route.params.id}&page=${page}`)
 
             if (res.status == 200) {
-                tweets.value.push(...res.data)
+                tweets.value.push(...res.data.data)
             } else {
 
             }
-
         }
-
-        getProfile()
         getTweetsByProfile()
+
+        window.onscroll = function () {
+
+            if ((window.innerHeight + window.pageYOffset + 10) >= document.body.offsetHeight) {
+                page++
+                getTweetsByProfile()
+            }
+        }
 
         return { route, profile, tweets }
     }

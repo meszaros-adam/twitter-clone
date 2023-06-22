@@ -38,7 +38,7 @@ import { onMounted } from 'vue';
 import { useRouter } from 'vue-router'
 export default {
     props: ["user"],
-    setup(props) {
+    setup() {
 
         const router = useRouter();
 
