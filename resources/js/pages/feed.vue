@@ -21,6 +21,7 @@
 import buttonVue from './components/button.vue'
 import alertVue from './components/alert.vue';
 import tweetVue from './components/tweet.vue';
+import infiniteScroll from '../composables/infiniteScroll'
 import { ref } from 'vue';
 import callApi from '../composables/callApi';
 export default {
@@ -53,9 +54,23 @@ export default {
 
         const tweets = ref([])
 
-        const getTweets = async () => {
+        let page = 1
 
+        const getTweets = async () => {
+            page++
+
+            const res = await callApi('get', `/get_all_tweets?page=${page}`)
+
+            if (res.status == 200) {
+                tweets.value.push(...res.data.data)
+            } else {
+
+            }
         }
+        
+        getTweets()
+
+        infiniteScroll(getTweets)
 
         return { newTweet, sendTweet, alertText, tweets }
     }

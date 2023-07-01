@@ -25,4 +25,8 @@ class TweetsController extends Controller
     {
         return Tweet::where('user_id', $request->user_id)->orderBy('created_at')->paginate(10);
     }
+    public function getAll(Request $request)
+    {
+        return Tweet::orderBy('created_at')->paginate(10);
+    }
 }

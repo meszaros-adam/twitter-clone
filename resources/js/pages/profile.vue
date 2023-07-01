@@ -10,6 +10,7 @@
 import { useRoute } from 'vue-router'
 import callApi from '../composables/callApi'
 import tweetVue from './components/tweet.vue'
+import infiniteScroll from '../composables/infiniteScroll'
 import { ref } from 'vue'
 export default {
     components: { tweetVue },
@@ -31,26 +32,21 @@ export default {
         const tweets = ref([])
         let page = 1
         const getTweetsByProfile = async () => {
+            page++
 
             const res = await callApi('get', `/get_tweets_by_user?user_id=${route.params.id}&page=${page}`)
 
             if (res.status == 200) {
                 tweets.value.push(...res.data.data)
+
             } else {
 
             }
         }
+
         getTweetsByProfile()
 
-        window.onscroll = function () {
-
-            if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-                console.log('szia')
-                page++
-                getTweetsByProfile()
-
-            }
-        }
+        infiniteScroll(getTweetsByProfile)
 
         return { route, profile, tweets }
     }
