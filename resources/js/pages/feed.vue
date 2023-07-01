@@ -26,9 +26,9 @@ import callApi from '../composables/callApi';
 export default {
     components: { buttonVue, alertVue, tweetVue },
     setup() {
-        const newTweet = ref('')
 
-        const tweets = ref([])
+        //tweet sending
+        const newTweet = ref('')
 
         const alertText = ref('')
 
@@ -47,6 +47,14 @@ export default {
             } else {
                 console.log('Failed to send the tweet!')
             }
+        }
+
+        //tweet loading
+
+        const tweets = ref([])
+
+        const getTweets = async () => {
+
         }
 
         return { newTweet, sendTweet, alertText, tweets }

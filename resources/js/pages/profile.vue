@@ -44,9 +44,11 @@ export default {
 
         window.onscroll = function () {
 
-            if ((window.innerHeight + window.pageYOffset + 10) >= document.body.offsetHeight) {
+            if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+                console.log('szia')
                 page++
                 getTweetsByProfile()
+
             }
         }
 
