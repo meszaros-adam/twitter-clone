@@ -18,6 +18,6 @@ class Tweet extends Model
         return $this->belongsTo(User::class);
     }
     public function getCreatedAtAttribute($value){
-        return  Carbon::parse($value)->format('Y/m/d');
+        return  Carbon::parse($value)->format('Y/m/d H:i');
     }
 }
