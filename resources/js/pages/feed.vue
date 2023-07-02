@@ -13,6 +13,9 @@
 
                 </tweetVue>
             </transition-group>
+            <div v-if="showLoading" class="flex justify-center">
+                <img class="loading-animation" src="/images/Spin-1.2s-200px.svg" alt="Loading animation">
+            </div>
         </div>
     </div>
 </template>
@@ -53,26 +56,39 @@ export default {
         //tweet loading
 
         const tweets = ref([])
-
-        let page = 1
+        const lastPage = ref(2)
+        const showLoading = ref(false)
+        const currentPage = ref(1)
 
         const getTweets = async () => {
-            page++
 
-            const res = await callApi('get', `/get_all_tweets?page=${page}`)
+            if (lastPage.value > currentPage.value) {
+                currentPage.value++
+                showLoading.value = true
 
-            if (res.status == 200) {
-                tweets.value.push(...res.data.data)
-            } else {
+                const res = await callApi('get', `/get_all_tweets?page=${currentPage.value}`)
+
+                if (res.status == 200) {
+                    tweets.value.push(...res.data.data)
+                    lastPage.value = res.data.last_page
+
+                } else {
+
+                }
+
+                showLoading.value = false
 
             }
+
         }
-        
+
         getTweets()
 
         infiniteScroll(getTweets)
 
-        return { newTweet, sendTweet, alertText, tweets }
+
+
+        return { newTweet, sendTweet, alertText, tweets, showLoading }
     }
 }
 </script>

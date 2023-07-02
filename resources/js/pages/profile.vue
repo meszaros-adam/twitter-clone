@@ -1,8 +1,15 @@
 <template>
     <div class="container">
         <h1 v-if="profile"> {{ profile.nickname }}</h1>
-        <tweetVue v-for="tweet in tweets" :key="tweet.id" :tweet="tweet">
-        </tweetVue>
+        <div class="container">
+            <transition-group name="tweets" tag="ul">
+                <tweetVue v-for="tweet in tweets" :key="tweet.id" :tweet="tweet">
+                </tweetVue>
+            </transition-group>
+            <div v-if="showLoading" class="flex justify-center">
+                <img class="loading-animation" src="/images/Spin-1.2s-200px.svg" alt="Loading animation">
+            </div>
+        </div>
     </div>
 </template>
 
@@ -30,17 +37,25 @@ export default {
         getProfile()
 
         const tweets = ref([])
-        let page = 1
+        const currentPage = ref(1)
+        const lastPage = ref(2)
+        const showLoading = ref(false)
+
         const getTweetsByProfile = async () => {
-            page++
 
-            const res = await callApi('get', `/get_tweets_by_user?user_id=${route.params.id}&page=${page}`)
+            if (lastPage.value > currentPage.value) {
+                currentPage.value++
+                showLoading.value = true
 
-            if (res.status == 200) {
-                tweets.value.push(...res.data.data)
+                const res = await callApi('get', `/get_tweets_by_user?user_id=${route.params.id}&page=${currentPage.value}`)
 
-            } else {
+                if (res.status == 200) {
+                    tweets.value.push(...res.data.data)
+                    lastPage.value = res.data.last_page
+                } else {
 
+                }
+                showLoading.value = false
             }
         }
 
@@ -48,7 +63,7 @@ export default {
 
         infiniteScroll(getTweetsByProfile)
 
-        return { route, profile, tweets }
+        return { route, profile, tweets, showLoading }
     }
 }
 </script>

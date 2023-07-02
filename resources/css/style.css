@@ -205,6 +205,10 @@ nav a:hover {
     background-color: #0fc4f7;
 }
 
+.loading-animation{
+    height: 3rem;
+}
+
 /* Media Querries */
 @media only screen and (min-width: 576px) {
     .container {
