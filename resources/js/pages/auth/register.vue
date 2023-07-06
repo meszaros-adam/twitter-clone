@@ -20,19 +20,18 @@
                 <input v-model="registerData.password_confirmation" type="password" id="password-confirmation"
                     name="password-confirmation">
             </div>
-            <buttonVue @click="registration">Regsiter</buttonVue>
+            <button class="button button-auth" @click="registration">Regsiter</button>
         </div>
     </div>
 </template>
 
 <script>
-import buttonVue from '../components/button.vue';
 import alertVue from '../components/alert.vue';
 import { ref } from "vue";
 import callApi from '../../composables/callApi';
 import validateEmail from '../../composables/validateEmail'
 export default {
-    components: { buttonVue, alertVue },
+    components: { alertVue },
     setup() {
         const registerData = ref({
             nickname: '',

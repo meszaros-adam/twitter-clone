@@ -1,5 +1,5 @@
 <template>
-    <div class="tweet">
+    <div class="tweet rounded">
         <div class="user_and_date">
             <div>
                 {{ tweet.user.nickname }}
@@ -31,7 +31,6 @@ export default {
     background-color: black;
     color: whitesmoke;
     padding: 1rem;
-    border-radius: var(--borderRadius);
     margin-bottom: 1rem;
 }
 

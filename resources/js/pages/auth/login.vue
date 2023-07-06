@@ -12,7 +12,7 @@
                 <input v-model="loginData.password" type="password" id="password" name="password">
             </div>
             <div class="flex">
-                <buttonVue @click="login">Login</buttonVue>
+                <button class="button button-auth" @click="login">Login</button>
                 <label class="checkbox">
                     <input v-model="loginData.stayLoggedIn" type="checkbox">
                     Stay logged in
@@ -24,12 +24,11 @@
 
 <script>
 import { ref } from 'vue';
-import buttonVue from '../components/button.vue';
 import alertVue from '../components/alert.vue';
 import callApi from '../../composables/callApi';
 import validateEmail from '../../composables/validateEmail';
 export default {
-    components: { buttonVue, alertVue },
+    components: { alertVue },
 
     setup() {
         const loginData = ref({

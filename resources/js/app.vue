@@ -12,14 +12,14 @@
         <nav class="nav">
             <div>
                 <div v-if="user">
-                    <router-link :to="{ name: 'Profile', params: { id: user.id } }">
+                    <router-link :to="{ name: 'Profile', params: { id: user.id } }" class="rounded">
                         {{ user.nickname }}
                     </router-link>
                     <a href="/auth/logout">Logout</a>
                 </div>
                 <div v-else>
-                    <router-link to="/login">Login</router-link>
-                    <router-link to="/register">Register</router-link>
+                    <router-link to="/login" class="rounded">Login</router-link>
+                    <router-link to="/register" class="rounded">Register</router-link>
 
                 </div>
             </div>

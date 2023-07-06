@@ -45,6 +45,10 @@
     cursor: pointer;
 }
 
+.rounded {
+    border-radius: var(--borderRadius);
+}
+
 /* Utility classes */
 
 
@@ -205,8 +209,33 @@ nav a:hover {
     background-color: #0fc4f7;
 }
 
-.loading-animation{
+.loading-animation {
     height: 3rem;
+}
+
+.button {
+    background-color: var(whitesmoke);
+    padding: 10px;
+    border-radius: 10px;
+    border-style: none;
+    border: solid 3px var(black);
+    cursor: pointer;
+    color: black;
+    transition: all 0.3s ease-in-out;
+    font-size: large;
+    font-weight: bold;
+}
+
+button:hover {
+    box-shadow: 0px 15px 10px -15px var(--mainColor);
+    color: black;
+    background-color: var(--mainColor);
+}
+
+button.button-auth:hover {
+    box-shadow: 0px 15px 10px -15px var(--secondaryColor);
+    color: whitesmoke;
+    background-color: var(--secondaryColor);
 }
 
 /* Media Querries */

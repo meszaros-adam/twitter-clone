@@ -4,7 +4,7 @@
             <alertVue :text="alertText"></alertVue>
             <textarea v-model="newTweet" placeholder="Write a new tweet!"> </textarea>
             <div>
-                <buttonVue @click="sendTweet">Send</buttonVue>
+                <button @click="sendTweet" class="button">Send</button>
             </div>
         </div>
         <div class="container">
@@ -21,14 +21,13 @@
 </template>
 
 <script>
-import buttonVue from './components/button.vue'
 import alertVue from './components/alert.vue';
 import tweetVue from './components/tweet.vue';
 import infiniteScroll from '../composables/infiniteScroll'
 import { ref } from 'vue';
 import callApi from '../composables/callApi';
 export default {
-    components: { buttonVue, alertVue, tweetVue },
+    components: { alertVue, tweetVue },
     setup() {
 
         //tweet sending
