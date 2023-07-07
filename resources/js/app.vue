@@ -30,11 +30,12 @@
         <footer>
             Twitter Clone &copy; Mészáros Ádám 2023
         </footer>
+        <button id="up-arrow" @click="scrollUp" class="up-arrow">🠕</button>
     </div>
 </template>
 
 <script>
-import { onMounted } from 'vue';
+import { onMounted, ref} from 'vue';
 import { useRouter } from 'vue-router'
 export default {
     props: ["user"],
@@ -60,6 +61,32 @@ export default {
             })
 
         })
+
+        //up-arrow
+        let upArrow = null;
+
+        onMounted(()=>{
+            upArrow = document.getElementById("up-arrow")
+        })
+
+        const scrollFunc = () => {
+            const y = window.scrollY
+
+            if (y > 600) {
+                upArrow.className = "up-arrow visible"
+            }
+            else {
+                upArrow.className = "up-arrow"
+            }
+        }
+
+        window.addEventListener("scroll", scrollFunc)
+
+        const scrollUp = () => {
+            window.scrollTo(0, 0);
+        }
+
+        return {scrollUp}
     }
 }
 </script>
