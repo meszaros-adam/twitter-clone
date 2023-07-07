@@ -12,7 +12,7 @@
                 <input v-model="loginData.password" type="password" id="password" name="password">
             </div>
             <div class="flex">
-                <button class="button button-auth" @click="login">Login</button>
+                <button class="button" @click="login">Login</button>
                 <label class="checkbox">
                     <input v-model="loginData.stayLoggedIn" type="checkbox">
                     Stay logged in

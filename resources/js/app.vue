@@ -15,7 +15,7 @@
                     <router-link :to="{ name: 'Profile', params: { id: user.id } }" class="rounded">
                         {{ user.nickname }}
                     </router-link>
-                    <a href="/auth/logout">Logout</a>
+                    <a href="/auth/logout" class="rounded">Logout</a>
                 </div>
                 <div v-else>
                     <router-link to="/login" class="rounded">Login</router-link>

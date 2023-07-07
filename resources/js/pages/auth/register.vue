@@ -20,7 +20,7 @@
                 <input v-model="registerData.password_confirmation" type="password" id="password-confirmation"
                     name="password-confirmation">
             </div>
-            <button class="button button-auth" @click="registration">Regsiter</button>
+            <button class="button" @click="registration">Regsiter</button>
         </div>
     </div>
 </template>
