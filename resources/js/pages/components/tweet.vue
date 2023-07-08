@@ -2,7 +2,9 @@
     <div class="tweet rounded">
         <div class="user_and_date">
             <div>
-                {{ tweet.user.nickname }}
+                <router-link :to="{ name: 'Profile', params: { id: tweet.user.id } }">
+                    {{ tweet.user.nickname }}
+                </router-link>
             </div>
             <div>
                 {{ tweet.created_at }}
