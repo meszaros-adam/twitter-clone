@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AuthCheck;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,13 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('auth')->group(function () {
+Route::prefix('/auth')->group(function () {
     Route::post('/register', [App\Http\Controllers\UsersController::class, 'register']);
     Route::post('/login', [App\Http\Controllers\UsersController::class, 'login']);
     Route::get('/logout', [App\Http\Controllers\UsersController::class, 'logout']);
 });
 
-Route::post('/create_tweet', [App\Http\Controllers\TweetsController::class, 'create']);
+Route::post('/create_tweet', [App\Http\Controllers\TweetsController::class, 'create'])->middleware(AuthCheck::class);
 
 Route::get('/get_user', [App\Http\Controllers\UsersController::class, 'getUser']);
 Route::get('/get_tweets_by_user', [App\Http\Controllers\TweetsController::class, 'getByUser']);
