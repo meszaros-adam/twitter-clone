@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-        <h1 v-if="profile"> {{ profile.nickname }}</h1>
+        <div class="flex">
+            <h1 v-if="profile"> {{ profile.nickname }}</h1>
+            <button class="follow-button"> Follow</button>
+        </div>
         <div class="container">
             <transition-group name="tweets" tag="ul">
                 <tweetVue v-for="tweet in tweets" :key="tweet.id" :tweet="tweet">

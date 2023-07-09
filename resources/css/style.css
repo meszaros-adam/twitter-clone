@@ -217,13 +217,16 @@ nav a:hover {
     height: 3rem;
 }
 
+button {
+    cursor: pointer;
+}
+
 .button {
     background-color: white;
     padding: 10px;
     border-radius: 10px;
     border-style: solid;
     border: solid 3px var(black);
-    cursor: pointer;
     color: black;
     transition: all 0.3s ease-in-out;
     font-size: large;
@@ -252,15 +255,27 @@ nav a:hover {
 .up-arrow:hover {
     color: var(--mainColor);
     border-color: var(--mainColor);
-    cursor: pointer;
 }
 
 .up-arrow.visible {
     right: 20px;
 }
 
-a:hover{
+a:hover {
     text-decoration: underline;
+}
+
+.follow-button {
+    margin: 0 1rem 0 1rem;
+    background-color: var(--mainColor);
+    border-style: solid;
+    padding: 5px;
+    border-radius: var(--borderRadius);
+
+}
+
+.follow-button:hover {
+    background-color: #00c8ff;
 }
 
 /* Media Querries */
