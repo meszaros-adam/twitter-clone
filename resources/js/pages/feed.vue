@@ -55,9 +55,9 @@ export default {
         //tweet loading
 
         const tweets = ref([])
-        const lastPage = ref(2)
+        const lastPage = ref(1)
         const showLoading = ref(false)
-        const currentPage = ref(1)
+        const currentPage = ref(0)
 
         const getTweets = async () => {
 
