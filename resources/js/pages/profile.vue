@@ -2,7 +2,7 @@
     <div class="container">
         <div class="flex">
             <h1 v-if="profile"> {{ profile.nickname }}</h1>
-            <button class="follow-button"> Follow</button>
+            <button @click="follow" class="follow-button"> Follow</button>
         </div>
         <div class="container">
             <transition-group name="tweets" tag="ul">
@@ -40,8 +40,8 @@ export default {
         getProfile()
 
         const tweets = ref([])
-        const currentPage = ref(1)
-        const lastPage = ref(2)
+        const currentPage = ref(0)
+        const lastPage = ref(1)
         const showLoading = ref(false)
 
         const getTweetsByProfile = async () => {
@@ -66,7 +66,17 @@ export default {
 
         infiniteScroll(getTweetsByProfile)
 
-        return { route, profile, tweets, showLoading }
+        const follow = async () => {
+            const res = callApi('post', '/create_follow', { 'followed_id': route.params.id })
+
+            if (res.status == 201) {
+                consol.log('Succesful follow')
+            } else {
+                console.log('Follow failed')
+            }
+        }
+
+        return { route, profile, tweets, showLoading, follow }
     }
 }
 </script>
