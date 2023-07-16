@@ -43,7 +43,7 @@ export default {
         const registration = async () => {
 
             if (registerData.value.nickname.trim().length < 4) return showAlert('Nickname must be at least 4 characters!')
-            if (!validateEmail(registerData.trim().value.email)) return showAlert('Email must be a valid email!')
+            if (!validateEmail(registerData.value.email.trim())) return showAlert('Email must be a valid email!')
             if (registerData.value.password.trim().length < 6) return showAlert('Password must be at least 6 characters!')
             if (registerData.value.password != registerData.value.password_confirmation) return showAlert('The passwords do not match!')
 
@@ -51,6 +51,7 @@ export default {
 
             if (res.status == 201) {
                 console.log('Sucessfull registration!')
+                window.location.href = '/login'
             } else {
                 console.log('Registration failed!')
             }
