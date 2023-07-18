@@ -2,7 +2,8 @@
     <div class="container">
         <div class="flex">
             <h1 v-if="profile"> {{ profile.nickname }}</h1>
-            <button @click="follow" class="follow-button"> Follow</button>
+            <button @click="follow" class="follow-button">Follow</button>
+            <button @click="unfollow" class="follow-button">Unfolow</button>
         </div>
         <div class="container">
             <transition-group name="tweets" tag="ul">
@@ -66,6 +67,7 @@ export default {
 
         infiniteScroll(getTweetsByProfile)
 
+        //follow unfollow 
         const follow = async () => {
             const res = callApi('post', '/create_follow', { 'followed_id': route.params.id })
 
@@ -76,7 +78,17 @@ export default {
             }
         }
 
-        return { route, profile, tweets, showLoading, follow }
+        const unfollow = async () => {
+            const res = callApi('post', '/delete_follow', { 'followed_id': route.params.id })
+
+            if (res.status == 200) {
+                consol.log('Succesful delete')
+            } else {
+                console.log('Delete failed')
+            }
+        }
+
+        return { route, profile, tweets, showLoading, follow, unfollow}
     }
 }
 </script>

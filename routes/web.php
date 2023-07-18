@@ -29,6 +29,7 @@ Route::get('/get_tweets_by_user', [App\Http\Controllers\TweetsController::class,
 Route::get('/get_all_tweets', [App\Http\Controllers\TweetsController::class, 'getAll']);
 
 Route::post('/create_follow', [\App\Http\Controllers\FollowsController::class, 'createFollow']);
+Route::post('/delete_follow', [\App\Http\Controllers\FollowsController::class, 'deleteFollow']);
 
 Route::fallback(function () {
     return view('app');

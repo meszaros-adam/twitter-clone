@@ -19,4 +19,18 @@ class FollowsController extends Controller
             'followed_id' => $request->followed_id,
         ]);
     }
+
+    public function deleteFollow(Request $request)
+    {
+        $this->validate($request, [
+            'followed_id' => 'required|integer'
+        ]);
+
+        return Follow::where(
+            [
+                ['follower_id', Auth::user()->id],
+                ['followed_id', $request->followed_id]
+            ]
+        )->delete();
+    }
 }
