@@ -37,6 +37,7 @@
 <script>
 import { onMounted, ref} from 'vue';
 import { useRouter } from 'vue-router'
+import { useFollowedsStore } from './stores/followeds';
 export default {
     props: ["user"],
     setup() {
@@ -85,6 +86,12 @@ export default {
         const scrollUp = () => {
             window.scrollTo(0, 0);
         }
+
+        //followeds
+
+        const followedsStore = useFollowedsStore();
+
+        followedsStore.add()
 
         return {scrollUp}
     }
