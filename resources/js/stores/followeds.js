@@ -6,10 +6,16 @@ export const useFollowedsStore = defineStore("followeds", {
     },
     actions: {
         add(followed) {
-            Array.isArray(followed) ? this.followeds.push(...followed) : this.followeds.push(followed)
+            Array.isArray(followed) ? this.followeds.push(...followed) : this.followeds.push(parseInt(followed))
         },
         remove(followed) {
-            this.followeds.filter(value => value = followed)
+            console.log('filter')
+            this.followeds = this.followeds.filter(item => item !== parseInt(followed))
         },
-    }
+    },
+    getters: {
+        getFolloweds(state) {
+            return state.followeds
+        }
+    },
 });

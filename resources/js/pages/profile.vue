@@ -2,8 +2,8 @@
     <div class="container">
         <div class="flex">
             <h1 v-if="profile"> {{ profile.nickname }}</h1>
-            <button @click="follow" class="follow-button">Follow</button>
-            <button @click="unfollow" class="follow-button">Unfolow</button>
+            <button v-if="!isFollowed" @click="follow" class="follow-button">Follow</button>
+            <button v-if="isFollowed" @click="unfollow" class="follow-button">Unfollow</button>
         </div>
         <div class="container">
             <transition-group name="tweets" tag="ul">
@@ -22,7 +22,8 @@ import { useRoute } from 'vue-router'
 import callApi from '../composables/callApi'
 import tweetVue from './components/tweet.vue'
 import infiniteScroll from '../composables/infiniteScroll'
-import { ref } from 'vue'
+import { useFollowedsStore } from '../stores/followeds'
+import { ref, computed, toRaw } from 'vue'
 export default {
     components: { tweetVue },
     setup() {
@@ -68,27 +69,36 @@ export default {
         infiniteScroll(getTweetsByProfile)
 
         //follow unfollow 
+        const followedsStore = useFollowedsStore();
+
         const follow = async () => {
-            const res = callApi('post', '/create_follow', { 'followed_id': route.params.id })
+            const res = await callApi('post', '/create_follow', { 'followed_id': route.params.id })
 
             if (res.status == 201) {
-                consol.log('Succesful follow')
+                console.log('Succesful follow')
+                followedsStore.add(route.params.id)
             } else {
                 console.log('Follow failed')
             }
         }
 
         const unfollow = async () => {
-            const res = callApi('post', '/delete_follow', { 'followed_id': route.params.id })
+            const res = await callApi('post', '/delete_follow', { 'followed_id': route.params.id })
 
             if (res.status == 200) {
-                consol.log('Succesful delete')
+                console.log('Succesful delete')
+                followedsStore.remove(route.params.id)
             } else {
                 console.log('Delete failed')
             }
         }
 
-        return { route, profile, tweets, showLoading, follow, unfollow}
+        //is this page followed or not
+        const isFollowed = computed(() => {
+            return followedsStore.getFolloweds.includes(parseInt(route.params.id))
+        });
+
+        return { route, profile, tweets, showLoading, follow, unfollow, isFollowed }
     }
 }
 </script>

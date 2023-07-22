@@ -35,14 +35,15 @@
 </template>
 
 <script>
-import { onMounted, ref} from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
 import { useFollowedsStore } from './stores/followeds';
 export default {
     props: ["user"],
-    setup() {
+    setup(props) {
 
         const router = useRouter();
+        const user = ref(props.user)
 
         //hamburger menu       
         onMounted(() => {
@@ -66,7 +67,7 @@ export default {
         //up-arrow
         let upArrow = null;
 
-        onMounted(()=>{
+        onMounted(() => {
             upArrow = document.getElementById("up-arrow")
         })
 
@@ -91,9 +92,11 @@ export default {
 
         const followedsStore = useFollowedsStore();
 
-        followedsStore.add()
+        const followeds = user.value.followeds.map(value => value.followed_id)
 
-        return {scrollUp}
+        followedsStore.add(followeds)
+
+        return { scrollUp, user }
     }
 }
 </script>
