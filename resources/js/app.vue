@@ -91,8 +91,14 @@ export default {
         //followeds
 
         const followedsStore = useFollowedsStore();
+        let followeds = []
 
-        const followeds = user.value.followeds.map(value => value.followed_id)
+        console.log(user.value)
+        if (user.value) {
+            followeds = user.value.followeds.map(value => value.followed_id)
+        }
+
+
 
         followedsStore.add(followeds)
 
