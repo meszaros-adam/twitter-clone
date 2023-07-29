@@ -93,7 +93,6 @@ export default {
         const followedsStore = useFollowedsStore();
         let followeds = []
 
-        console.log(user.value)
         if (user.value) {
             followeds = user.value.followeds.map(value => value.followed_id)
         }

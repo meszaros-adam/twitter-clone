@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twitter Clone</title>
     @vite('resources/css/style.css')
+    <script src="https://kit.fontawesome.com/87803efb4c.js" crossorigin="anonymous"></script>
 </head>
 
 <body>

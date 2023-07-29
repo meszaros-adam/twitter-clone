@@ -9,19 +9,36 @@
             <div>
                 {{ tweet.created_at }}
             </div>
-
         </div>
         <hr>
         <div class="text">
             {{ tweet.text }}
         </div>
+        <div class="flex tweet-icons">
+            <i @click="retweet" class="fa-solid fa-retweet" title="Retweet"></i>
+            <i class="fa-regular fa-comments" title="Comments"></i>
+        </div>
     </div>
 </template>
 
 <script>
+import callApi from '../../composables/callApi'
 export default {
     props: ["tweet"],
-    setup() {
+    setup(props) {
+
+        const retweet = async () => {
+            const res = await callApi('post', '/create_retweet', {tweet_id: props.tweet.id})
+
+            if (res.status == 201) {
+
+            }
+            else {
+
+            }
+        }
+
+        return{ retweet}
 
     }
 }
