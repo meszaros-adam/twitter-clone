@@ -89,7 +89,6 @@ export default {
         }
 
         //followeds
-
         const followedsStore = useFollowedsStore();
         let followeds = []
 
@@ -97,11 +96,11 @@ export default {
             followeds = user.value.followeds.map(value => value.followed_id)
         }
 
-
-
         followedsStore.add(followeds)
 
         return { scrollUp, user }
+
+        //retweets
     }
 }
 </script>

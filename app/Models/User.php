@@ -42,10 +42,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $with = ["followeds"];
+    protected $with = ["followeds", "retweets"];
 
     public function followeds()
     {
         return $this->hasMany(Follow::class, "follower_id");
+    }
+    public function retweets()
+    {
+        return $this->hasMany(Retweet::class);
     }
 }
