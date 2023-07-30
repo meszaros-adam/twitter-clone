@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('tweet_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('tweet_id')->references('id')->on('tweets');
+            $table->unique(['user_id', 'tweet_id']);
             $table->timestamps();
         });
     }
