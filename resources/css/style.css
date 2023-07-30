@@ -278,13 +278,18 @@ a:hover {
     background-color: #00c8ff;
 }
 
-.tweet-icons{
+.tweet-icons {
     margin-top: 2rem;
 }
 
-i{
-    cursor:pointer;
+i {
+    cursor: pointer;
     margin: 0rem 1rem;
+}
+
+.retweet-active {
+    color: var(--mainColor);
+
 }
 
 /* Media Querries */

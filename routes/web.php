@@ -32,6 +32,7 @@ Route::post('/create_follow', [\App\Http\Controllers\FollowsController::class, '
 Route::post('/delete_follow', [\App\Http\Controllers\FollowsController::class, 'deleteFollow']);
 
 Route::post('/create_retweet', [\App\Http\Controllers\RetweetsController::class, 'createRetweet']);
+Route::post('/delete_retweet', [\App\Http\Controllers\RetweetsController::class, 'deleteRetweet']);
 
 Route::fallback(function () {
     return view('app');

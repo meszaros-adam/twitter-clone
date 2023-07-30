@@ -19,4 +19,16 @@ class RetweetsController extends Controller
             'user_id' => Auth::user()->id,
         ]);
     }
+
+    public function deleteRetweet(Request $request)
+    {
+        $this->validate($request, [
+            'tweet_id' => 'required|integer'
+        ]);
+
+        return Retweet::where([
+            ['user_id', Auth::user()->id],
+            ['tweet_id', $request->tweet_id],
+        ])->delete();
+    }
 }

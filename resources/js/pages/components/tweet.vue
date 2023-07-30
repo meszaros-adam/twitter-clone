@@ -15,30 +15,54 @@
             {{ tweet.text }}
         </div>
         <div class="flex tweet-icons">
-            <i @click="retweet" class="fa-solid fa-retweet" title="Retweet"></i>
+            <i v-if="!isRetweeted" @click="createRetweet" class="fa-solid fa-retweet" title="Retweet"></i>
+            <i v-if="isRetweeted" @click="deleteRetweet" class="fa-solid fa-retweet retweet-active"
+                title="Delete retweet"></i>
             <i class="fa-regular fa-comments" title="Comments"></i>
         </div>
     </div>
 </template>
 
 <script>
+import { computed } from 'vue'
 import callApi from '../../composables/callApi'
+import { useRetweetsStore } from '../../stores/retweets'
 export default {
     props: ["tweet"],
     setup(props) {
 
-        const retweet = async () => {
-            const res = await callApi('post', '/create_retweet', {tweet_id: props.tweet.id})
+        const retweetStore = useRetweetsStore();
+
+        const createRetweet = async () => {
+            console.log('szia')
+            const res = await callApi('post', '/create_retweet', { tweet_id: props.tweet.id })
 
             if (res.status == 201) {
-
+                retweetStore.add(props.tweet.id)
             }
             else {
 
             }
         }
 
-        return{ retweet}
+        const deleteRetweet = async () => {
+
+            const res = await callApi('post', '/delete_retweet', { tweet_id: props.tweet.id })
+
+            if (res.status == 200) {
+                retweetStore.remove(props.tweet.id)
+            } else {
+
+            }
+        }
+
+        const isRetweeted = computed(() => {
+            return retweetStore.getRetweets.includes(parseInt(props.tweet.id))
+        })
+
+
+
+        return { createRetweet, deleteRetweet, isRetweeted}
 
     }
 }

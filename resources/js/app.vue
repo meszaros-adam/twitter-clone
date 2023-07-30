@@ -38,6 +38,7 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
 import { useFollowedsStore } from './stores/followeds';
+import { useRetweetsStore } from './stores/retweets';
 export default {
     props: ["user"],
     setup(props) {
@@ -98,10 +99,21 @@ export default {
 
         followedsStore.add(followeds)
 
-        return { scrollUp, user }
-
         //retweets
+        const retweetsStore = useRetweetsStore();
+
+        let retweets = []
+
+        if (user.value) {
+            retweets = user.value.retweets.map(value => value.tweet_id)
+        }
+
+        retweetsStore.add(retweets)
+
+        return { scrollUp, user }
     }
+
+
 }
 </script>
 
