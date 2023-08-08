@@ -34,7 +34,6 @@ export default {
         const retweetStore = useRetweetsStore();
 
         const createRetweet = async () => {
-            console.log('szia')
             const res = await callApi('post', '/create_retweet', { tweet_id: props.tweet.id })
 
             if (res.status == 201) {
@@ -62,7 +61,7 @@ export default {
 
 
 
-        return { createRetweet, deleteRetweet, isRetweeted}
+        return { createRetweet, deleteRetweet, isRetweeted }
 
     }
 }
