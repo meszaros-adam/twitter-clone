@@ -30,12 +30,13 @@ class TweetsController extends Controller
         //get only the tetweeted tweets
         $retweets = Tweet::orderBy('retweets.created_at', 'desc')
             ->join('retweets', 'tweets.id', '=', 'retweets.tweet_id')
-            ->selectRaw('tweets.*, retweets.created_at AS retweet_created_at, retweets.user_id AS retweet_user_id');
+            ->join('users', 'retweets.user_id', '=', 'users.id')
+            ->selectRaw('tweets.*, retweets.created_at AS retweet_created_at, retweets.user_id AS retweet_user_id, users.nickname AS retweet_user_nickname');
 
         //get union of all tweets and retweeted tweets
-        return Tweet::selectRaw('tweets.*, null AS retweet_created_at, null AS retweet_user_id')
+        return Tweet::selectRaw('tweets.*, null AS retweet_created_at, null AS retweet_user_id, null AS retweet_user_nickname')
             ->union($retweets)
-            ->orderBy('created_at', 'desc')
+            ->orderByRaw('GREATEST(retweet_created_at, created_at) DESC, created_at DESC')
             ->paginate(10);
     }
 }
