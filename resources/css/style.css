@@ -40,6 +40,10 @@ html {
     justify-content: center;
 }
 
+.justify-space-between {
+    justify-content: space-between;
+}
+
 .flex-column {
     flex-direction: column;
     align-items: center;
@@ -290,6 +294,10 @@ i {
 .retweet-active {
     color: var(--mainColor);
 
+}
+
+.container {
+    max-width: 100%;
 }
 
 /* Media Querries */

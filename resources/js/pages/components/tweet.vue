@@ -1,5 +1,37 @@
 <template>
-    <div class="tweet rounded">
+    <div v-if="tweet.retweet_created_at" class="tweet rounded">
+        <div class="flex justify-space-between">
+            <div>
+                Retweeted by {{ tweet.retweet_user_nickname }}
+            </div>
+            <div>
+                {{ tweet.retweet_created_at }}
+            </div>
+        </div>
+        <div class="container">
+            <div class="user_and_date">
+                <div>
+                    <router-link :to="{ name: 'Profile', params: { id: tweet.user.id } }">
+                        {{ tweet.user.nickname }}
+                    </router-link>
+                </div>
+                <div>
+                    {{ tweet.created_at }}
+                </div>
+            </div>
+            <hr>
+            <div class="text">
+                {{ tweet.text }}
+            </div>
+            <div class="flex tweet-icons">
+                <i v-if="!isRetweeted" @click="createRetweet" class="fa-solid fa-retweet" title="Retweet"></i>
+                <i v-if="isRetweeted" @click="deleteRetweet" class="fa-solid fa-retweet retweet-active"
+                    title="Delete retweet"></i>
+                <i class="fa-regular fa-comments" title="Comments"></i>
+            </div>
+        </div>
+    </div>
+    <div v-else class="tweet rounded">
         <div class="user_and_date">
             <div>
                 <router-link :to="{ name: 'Profile', params: { id: tweet.user.id } }">
