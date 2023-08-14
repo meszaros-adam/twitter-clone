@@ -1,5 +1,5 @@
 <template>
-    <div v-if="tweet.retweet_created_at" class="tweet rounded">
+    <div v-if="tweet.retweet_created_at" class="retweet tweet rounded">
         <div class="flex justify-space-between">
             <div>
                 Retweeted by {{ tweet.retweet_user_nickname }}
@@ -8,7 +8,7 @@
                 {{ tweet.retweet_created_at }}
             </div>
         </div>
-        <div class="container">
+        <div class="container tweet rounded">
             <div class="user_and_date">
                 <div>
                     <router-link :to="{ name: 'Profile', params: { id: tweet.user.id } }">
@@ -106,6 +106,10 @@ export default {
     color: whitesmoke;
     padding: 1rem;
     margin-bottom: 1rem;
+}
+
+.retweet {
+    background-color: rgb(29, 29, 29);
 }
 
 .tweet .user_and_date {
