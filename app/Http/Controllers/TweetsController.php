@@ -25,16 +25,32 @@ class TweetsController extends Controller
     {
         return Tweet::where('user_id', $request->user_id)->orderBy('created_at', 'desc')->paginate(10);
     }
+    public function getFolloweds()
+    {
+        $followeds = array_column(Auth::user()->followeds->toArray(), 'followed_id');;
+
+        //get only the tetweeted tweets
+        $retweets = Tweet::whereIn('retweets.user_id', $followeds)->orderBy('retweets.created_at', 'desc')
+            ->join('retweets', 'tweets.id', '=', 'retweets.tweet_id')
+            ->join('users', 'retweets.user_id', '=', 'users.id')
+            ->selectRaw('tweets.*, retweets.id AS retweet_id ,retweets.created_at AS retweet_created_at, retweets.user_id AS retweet_user_id, users.nickname AS retweet_user_nickname');
+
+        //get union of all tweets and retweeted tweets
+        return Tweet::whereIn('user_id', $followeds)->selectRaw('tweets.*, null AS retweet_id, null AS retweet_created_at, null AS retweet_user_id, null AS retweet_user_nickname')
+            ->union($retweets)
+            ->orderByRaw('GREATEST(retweet_created_at, created_at) DESC, created_at DESC')
+            ->paginate(10);
+    }
     public function getAll(Request $request)
     {
         //get only the tetweeted tweets
         $retweets = Tweet::orderBy('retweets.created_at', 'desc')
             ->join('retweets', 'tweets.id', '=', 'retweets.tweet_id')
             ->join('users', 'retweets.user_id', '=', 'users.id')
-            ->selectRaw('tweets.*, retweets.created_at AS retweet_created_at, retweets.user_id AS retweet_user_id, users.nickname AS retweet_user_nickname');
+            ->selectRaw('tweets.*, retweets.id AS retweet_id ,retweets.created_at AS retweet_created_at, retweets.user_id AS retweet_user_id, users.nickname AS retweet_user_nickname');
 
         //get union of all tweets and retweeted tweets
-        return Tweet::selectRaw('tweets.*, null AS retweet_created_at, null AS retweet_user_id, null AS retweet_user_nickname')
+        return Tweet::selectRaw('tweets.*, null AS retweet_id, null AS retweet_created_at, null AS retweet_user_id, null AS retweet_user_nickname')
             ->union($retweets)
             ->orderByRaw('GREATEST(retweet_created_at, created_at) DESC, created_at DESC')
             ->paginate(10);

@@ -56,20 +56,22 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import callApi from '../../composables/callApi'
 import { useRetweetsStore } from '../../stores/retweets'
 export default {
     props: ["tweet"],
-    setup(props) {
+    setup(props, context) {
+
+        const tweet = ref(props.tweet)
 
         const retweetStore = useRetweetsStore();
 
         const createRetweet = async () => {
-            const res = await callApi('post', '/create_retweet', { tweet_id: props.tweet.id })
+            const res = await callApi('post', '/create_retweet', { tweet_id: tweet.value.id })
 
             if (res.status == 201) {
-                retweetStore.add(props.tweet.id)
+                retweetStore.add(tweet.value.id)
             }
             else {
 
@@ -78,22 +80,22 @@ export default {
 
         const deleteRetweet = async () => {
 
-            const res = await callApi('post', '/delete_retweet', { tweet_id: props.tweet.id })
+            const res = await callApi('post', '/delete_retweet', { tweet_id: tweet.value.id })
 
             if (res.status == 200) {
-                retweetStore.remove(props.tweet.id)
+                retweetStore.remove(tweet.value.id)
             } else {
 
             }
         }
 
         const isRetweeted = computed(() => {
-            return retweetStore.getRetweets.includes(parseInt(props.tweet.id))
+            return retweetStore.getRetweets.includes(parseInt(tweet.value.id))
         })
 
 
 
-        return { createRetweet, deleteRetweet, isRetweeted }
+        return { createRetweet, deleteRetweet, isRetweeted, tweet }
 
     }
 }
