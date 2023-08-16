@@ -17,10 +17,10 @@
 <script>
 import { ref } from 'vue';
 import callApi from '../composables/callApi';
+import feedNavigationVue from './components/feedNavigation.vue'
 import writeTweetVue from './components/writeTweet.vue';
 import tweetVue from './components/tweet.vue';
 import infiniteScroll from '../composables/infiniteScroll'
-import feedNavigationVue from './components/feedNavigation.vue'
 export default {
     components: { tweetVue, writeTweetVue, feedNavigationVue},
     setup() {
@@ -38,7 +38,7 @@ export default {
                 currentPage.value++
                 showLoading.value = true
 
-                const res = await callApi('get', `/get_tweets_by_follow?page=${currentPage.value}`)
+                const res = await callApi('get', `/get_all_tweets?page=${currentPage.value}`)
 
                 if (res.status == 200) {
                     tweets.value.push(...res.data.data)
@@ -64,5 +64,3 @@ export default {
     }
 }
 </script>
-
-

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="tweet.retweet_created_at" class="retweet tweet rounded">
+    <div v-if="tweet.retweet_id" class="retweet tweet rounded">
         <div class="flex justify-space-between">
             <div>
                 Retweeted by {{ tweet.retweet_user_nickname }}

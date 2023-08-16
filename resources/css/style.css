@@ -44,6 +44,10 @@ html {
     justify-content: space-between;
 }
 
+.justify-space-around {
+    justify-content: space-around;
+}
+
 .flex-column {
     flex-direction: column;
     align-items: center;
@@ -75,7 +79,7 @@ footer {
     padding: 0.5rem;
     display: flex;
     justify-content: center;
-    z-index: 98;
+    z-index: 3;
 }
 
 /* Stick footer on bottom */
@@ -254,6 +258,7 @@ button {
     border: 3px solid black;
     font-size: xx-large;
     font-weight: 900;
+    z-index: 4;
 }
 
 .up-arrow:hover {
@@ -298,6 +303,25 @@ i {
 
 .container {
     max-width: 100%;
+}
+
+.tweets-move,
+.tweets-enter-active,
+.tweets-leave-active {
+    transition: all 1s ease;
+}
+
+.tweets-enter-from {
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+.tweets-leave-to {
+    opacity: 0;
+}
+
+.tweets-leave-active {
+    position: absolute;
 }
 
 /* Media Querries */

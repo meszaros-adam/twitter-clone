@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Login from './pages/auth/login.vue'
 import Register from './pages/auth/register.vue'
 import Feed from './pages/feed.vue'
+import AllTweets from './pages/allTweets.vue'
 import Profile from './pages/profile.vue'
 
 const routes = [
@@ -9,6 +10,11 @@ const routes = [
         path: "/",
         name: "Feed",
         component: Feed,
+    },
+    {
+        path: "/all-tweets",
+        name: "All-Tweets",
+        component: AllTweets,
     },
     {
         path: "/login",
