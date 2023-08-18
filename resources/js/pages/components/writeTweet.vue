@@ -28,10 +28,7 @@ export default {
             const res = await callApi('post', '/create_tweet', { tweet: newTweet.value })
 
             if (res.status == 201) {
-                tweets.value.unshift(res.data)
-
                 newTweet.value = ""
-
             } else {
                 console.log('Failed to send the tweet!')
             }
