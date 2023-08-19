@@ -24,7 +24,14 @@ class TweetsController extends Controller
     }
     public function getByUser(Request $request)
     {
-        return Tweet::where('user_id', $request->user_id)->orderBy('created_at', 'desc')->paginate(10);
+        $retweet = Retweet::where('retweets.user_id', $request->user_id)
+            ->join('tweets', 'tweets.id', '=', 'retweets.tweet_id')
+            ->join('users', 'retweets.user_id', '=', 'users.id')
+            ->selectRaw('tweets.*, retweets.id AS retweet_id, DATE_FORMAT(retweets.created_at, "%Y/%m/%d %H:%i")  AS retweet_created_at, retweets.user_id AS retweet_user_id, users.nickname AS retweet_user_nickname, retweets.created_at  AS most_recent_date');
+
+        $tweets = Tweet::where('tweets.user_id', $request->user_id)->selectRaw('tweets.*, null AS retweet_id, null AS retweet_created_at, null AS retweet_user_id, null AS retweet_user_nickname, tweets.created_at AS most_recent_date');
+
+        return $tweets->union($retweet)->orderBy('most_recent_date', 'desc')->paginate(10);
     }
     public function getFolloweds()
     {
