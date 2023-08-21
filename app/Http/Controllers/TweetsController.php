@@ -35,7 +35,8 @@ class TweetsController extends Controller
     }
     public function getFolloweds()
     {
-        $followeds = array_column(Auth::user()->followeds->toArray(), 'followed_id');;
+
+        $followeds = array_column(Auth::user()->followeds->toArray(), 'followed_id');
 
         //get only the tetweeted tweets
         $retweets = Retweet::whereIn('retweets.user_id', $followeds)

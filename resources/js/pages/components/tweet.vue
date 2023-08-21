@@ -70,8 +70,12 @@ export default {
         const createRetweet = async () => {
             const res = await callApi('post', '/create_retweet', { tweet_id: tweet.value.id })
 
-            if (res.status == 201) {
+            if (res.status == 201 || 200) {
                 retweetStore.add(tweet.value.id)
+                tweet.value.retweet_created_at = res.data.retweet_created_at
+                tweet.value.retweet_user_nickname = res.data.retweet_user_nickname
+                tweet.value.retweet_id = res.data.retweet_id
+                console.log(res.data)
             }
             else {
 
