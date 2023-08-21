@@ -4,7 +4,7 @@
         <div class="container">
             <feedNavigationVue></feedNavigationVue>
             <transition-group name="tweets" tag="ul">
-                <tweetVue v-for="tweet in tweets" :key="tweet.id" :tweet="tweet">
+                <tweetVue v-for="tweet in tweets" :key="tweet.id" :tweet="tweet" @retweetRemoved="removeFromList">
                 </tweetVue>
             </transition-group>
             <div v-if="showLoading" class="flex justify-center">
@@ -22,8 +22,8 @@ import tweetVue from './components/tweet.vue';
 import infiniteScroll from '../composables/infiniteScroll'
 import feedNavigationVue from './components/feedNavigation.vue'
 export default {
-    components: { tweetVue, writeTweetVue, feedNavigationVue},
-    setup() {
+    components: { tweetVue, writeTweetVue, feedNavigationVue },
+    setup(props) {
 
         //tweet loading
 
@@ -59,8 +59,14 @@ export default {
         infiniteScroll(getTweets)
 
 
+        const removeFromList = (id) => {
+            console.log('szia')
+            console.log(tweets.value.findIndex((obj) => obj.retweet_id == id))
+        }
 
-        return { tweets, showLoading }
+
+
+        return { tweets, showLoading, removeFromList}
     }
 }
 </script>

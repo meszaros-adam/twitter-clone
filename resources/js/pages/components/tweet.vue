@@ -72,10 +72,12 @@ export default {
 
             if (res.status == 201 || 200) {
                 retweetStore.add(tweet.value.id)
-                tweet.value.retweet_created_at = res.data.retweet_created_at
+
+                context.emit('retweetCreated', res.data)
+
+                /*tweet.value.retweet_created_at = res.data.retweet_created_at
                 tweet.value.retweet_user_nickname = res.data.retweet_user_nickname
-                tweet.value.retweet_id = res.data.retweet_id
-                console.log(res.data)
+                tweet.value.retweet_id = res.data.retweet_id*/
             }
             else {
 
@@ -88,6 +90,8 @@ export default {
 
             if (res.status == 200) {
                 retweetStore.remove(tweet.value.id)
+
+                context.emit('retweetRemoved', tweet.value.retweet_id)
             } else {
 
             }

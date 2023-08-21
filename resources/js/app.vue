@@ -104,8 +104,6 @@ export default {
 
         let retweets = []
 
-        console.log(user.value)
-
         if (user.value) {
             retweets = user.value.retweets.map(value => value.tweet_id)
         }
