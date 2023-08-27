@@ -91,7 +91,9 @@ export default {
             if (res.status == 200) {
                 retweetStore.remove(tweet.value.id)
 
-                context.emit('retweetRemoved', tweet.value.retweet_id)
+                if (tweet.value.retweet_id) {
+                    context.emit('retweetRemoved', tweet.value.retweet_id)
+                }
             } else {
 
             }

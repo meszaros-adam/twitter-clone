@@ -4,7 +4,8 @@
         <div class="container">
             <feedNavigationVue></feedNavigationVue>
             <transition-group name="tweets" tag="ul">
-                <tweetVue v-for="tweet in tweets" :key="tweet.id" :tweet="tweet" @retweetRemoved="removeFromList">
+                <tweetVue v-for="tweet in tweets" :key="[tweet.id, tweet.retweet_id].toString()" :tweet="tweet"
+                    @retweetRemoved="removeFromList">
                 </tweetVue>
             </transition-group>
             <div v-if="showLoading" class="flex justify-center">
@@ -58,15 +59,11 @@ export default {
 
         infiniteScroll(getTweets)
 
-
         const removeFromList = (id) => {
-            console.log('szia')
-            console.log(tweets.value.findIndex((obj) => obj.retweet_id == id))
+            tweets.value = tweets.value.filter((tweet) => tweet.retweet_id !== id)
         }
 
-
-
-        return { tweets, showLoading, removeFromList}
+        return { tweets, showLoading, removeFromList }
     }
 }
 </script>

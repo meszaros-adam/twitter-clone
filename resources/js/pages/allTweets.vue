@@ -3,10 +3,11 @@
         <writeTweetVue></writeTweetVue>
         <div class="container">
             <feedNavigationVue></feedNavigationVue>
-            <transition-group name="tweets" tag="ul">
-                <tweetVue v-for="tweet in tweets" :key="tweet.id" :tweet="tweet">
-                </tweetVue>
-            </transition-group>
+
+            <tweetVue v-for="tweet in tweets" :key="[tweet.id, tweet.retweet_id].toString()" :tweet="tweet"
+                @retweetRemoved="removeFromList">
+            </tweetVue>
+
             <div v-if="showLoading" class="flex justify-center">
                 <img class="loading-animation" src="/images/Spin-1.2s-200px.svg" alt="Loading animation">
             </div>
@@ -22,7 +23,7 @@ import writeTweetVue from './components/writeTweet.vue';
 import tweetVue from './components/tweet.vue';
 import infiniteScroll from '../composables/infiniteScroll'
 export default {
-    components: { tweetVue, writeTweetVue, feedNavigationVue},
+    components: { tweetVue, writeTweetVue, feedNavigationVue },
     setup() {
 
         //tweet loading
@@ -43,24 +44,21 @@ export default {
                 if (res.status == 200) {
                     tweets.value.push(...res.data.data)
                     lastPage.value = res.data.last_page
-
                 } else {
-
                 }
-
                 showLoading.value = false
-
             }
-
         }
 
         getTweets()
 
         infiniteScroll(getTweets)
 
+        const removeFromList = (id) => {
+            tweets.value = tweets.value.filter((tweet) => tweet.retweet_id !== id)
+        }
 
-
-        return { tweets, showLoading }
+        return { tweets, showLoading, removeFromList }
     }
 }
 </script>
