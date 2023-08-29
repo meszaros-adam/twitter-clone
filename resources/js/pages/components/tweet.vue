@@ -74,10 +74,6 @@ export default {
                 retweetStore.add(tweet.value.id)
 
                 context.emit('retweetCreated', res.data)
-
-                /*tweet.value.retweet_created_at = res.data.retweet_created_at
-                tweet.value.retweet_user_nickname = res.data.retweet_user_nickname
-                tweet.value.retweet_id = res.data.retweet_id*/
             }
             else {
 

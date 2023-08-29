@@ -51,7 +51,7 @@ class TweetsController extends Controller
         return $tweets->union($retweets)->orderBy('most_recent_date', 'desc')->paginate(10);
     }
 
-    public function getAll(Request $request)
+    public function getAll()
     {
         //get only the retweeted tweets
         $retweets = Retweet::join('tweets', 'tweets.id', '=', 'retweets.tweet_id')

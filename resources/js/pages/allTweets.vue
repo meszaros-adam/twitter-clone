@@ -5,7 +5,7 @@
             <feedNavigationVue></feedNavigationVue>
 
             <tweetVue v-for="tweet in tweets" :key="[tweet.id, tweet.retweet_id].toString()" :tweet="tweet"
-                @retweetRemoved="removeFromList">
+                @retweetRemoved="removeFromList" @retweetCreated="addToList">
             </tweetVue>
 
             <div v-if="showLoading" class="flex justify-center">
@@ -58,7 +58,11 @@ export default {
             tweets.value = tweets.value.filter((tweet) => tweet.retweet_id !== id)
         }
 
-        return { tweets, showLoading, removeFromList }
+        const addToList = (tweet) => {
+            tweets.value.unshift(tweet)
+        }
+
+        return { tweets, showLoading, removeFromList, addToList }
     }
 }
 </script>
