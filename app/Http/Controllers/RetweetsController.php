@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Retweet;
 use App\Models\Tweet;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,11 +28,11 @@ class RetweetsController extends Controller
             'user_id' => Auth::user()->id,
         ]);
 
-        $retweet = $retweet->join('tweets', 'tweets.id', '=', 'retweets.tweet_id')
+        $retweet = Retweet::join('tweets', 'tweets.id', '=', 'retweets.tweet_id')
             ->join('users', 'retweets.user_id', '=', 'users.id')
-            ->selectRaw('tweets.*, retweets.id AS retweet_id, DATE_FORMAT(retweets.created_at, "%Y/%m/%d %H:%i")  AS retweet_created_at, retweets.user_id AS retweet_user_id, users.nickname AS retweet_user_nickname, retweets.created_at  AS most_recent_date')->first();
+            ->selectRaw('tweets.*, retweets.id AS retweet_id, DATE_FORMAT(retweets.created_at, "%Y/%m/%d %H:%i")  AS retweet_created_at, retweets.user_id AS retweet_user_id, users.nickname AS retweet_user_nickname, retweets.created_at  AS most_recent_date')->find($retweet->id);
 
-        $retweet->user = Auth::user();
+        $retweet->user = User::find($retweet->retweet_user_id);
 
         return $retweet;
     }
