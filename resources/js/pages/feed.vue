@@ -21,7 +21,8 @@ import callApi from '../composables/callApi';
 import writeTweetVue from './components/writeTweet.vue';
 import tweetVue from './components/tweet.vue';
 import infiniteScroll from '../composables/infiniteScroll'
-import feedNavigationVue from './components/feedNavigation.vue'
+import feedNavigationVue from './components/feedNavigation.vue';
+import { useUserStore } from '../stores/user';
 export default {
     components: { tweetVue, writeTweetVue, feedNavigationVue },
     setup(props) {
@@ -32,6 +33,7 @@ export default {
         const lastPage = ref(1)
         const showLoading = ref(false)
         const currentPage = ref(0)
+        const user = useUserStore()
 
         const getTweets = async () => {
 
@@ -59,9 +61,12 @@ export default {
 
         infiniteScroll(getTweets)
 
+
+
         const removeFromList = (id) => {
             tweets.value = tweets.value.filter((tweet) => tweet.retweet_id !== id)
         }
+
 
         return { tweets, showLoading, removeFromList }
     }

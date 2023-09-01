@@ -33,4 +33,10 @@ class FollowsController extends Controller
             ]
         )->delete();
     }
+
+    public function getFollowedList(){
+        $follows = Follow::where('follower_id', Auth::user()->id)->get();
+
+        return $follows;
+    }
 }

@@ -32,7 +32,7 @@ class RetweetsController extends Controller
             ->join('users', 'retweets.user_id', '=', 'users.id')
             ->selectRaw('tweets.*, retweets.id AS retweet_id, DATE_FORMAT(retweets.created_at, "%Y/%m/%d %H:%i")  AS retweet_created_at, retweets.user_id AS retweet_user_id, users.nickname AS retweet_user_nickname, retweets.created_at  AS most_recent_date')->find($retweet->id);
 
-        $retweet->user = User::find($retweet->retweet_user_id);
+        $retweet->user = User::find($retweet->user_id);
 
         return $retweet;
     }
