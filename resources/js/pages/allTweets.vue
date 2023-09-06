@@ -1,13 +1,13 @@
 <template>
     <div class="centering-on-desktop">
-        <writeTweetVue></writeTweetVue>
+        <writeTweetVue @newTweet="addToList"></writeTweetVue>
         <div class="container">
             <feedNavigationVue></feedNavigationVue>
-
-            <tweetVue v-for="tweet in tweets" :key="[tweet.id, tweet.retweet_id].toString()" :tweet="tweet"
-                @retweetRemoved="removeFromList" @retweetCreated="addToList">
-            </tweetVue>
-
+            <transition-group name="tweets" tag="ul">
+                <tweetVue v-for="tweet in tweets" :key="[tweet.id, tweet.retweet_id].toString()" :tweet="tweet"
+                    @retweetRemoved="removeFromList" @retweetCreated="addToList">
+                </tweetVue>
+            </transition-group>
             <div v-if="showLoading" class="flex justify-center">
                 <img class="loading-animation" src="/images/Spin-1.2s-200px.svg" alt="Loading animation">
             </div>

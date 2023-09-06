@@ -14,7 +14,9 @@ import alertVue from './alert.vue'
 import callApi from '../../composables/callApi';
 export default {
     components: { alertVue },
-    setup() {
+    //props and context both needed to emit
+    setup(props, context) {
+        
         //tweet sending
         const newTweet = ref('')
 
@@ -29,6 +31,7 @@ export default {
 
             if (res.status == 201) {
                 newTweet.value = ""
+                context.emit('newTweet', res.data)
             } else {
                 console.log('Failed to send the tweet!')
             }
