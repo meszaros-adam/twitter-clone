@@ -43,14 +43,15 @@ export default {
 
                 const res = await callApi('get', `/get_tweets_by_follow?page=${currentPage.value}`)
 
-                if (res.status == 200) {
+                if (res.status === 200) {
                     tweets.value.push(...res.data.data)
                     lastPage.value = res.data.last_page
-
+                }
+                else if (res.status == 401) {
+                    window.location = '/login'
                 } else {
 
                 }
-
                 showLoading.value = false
 
             }
@@ -70,8 +71,8 @@ export default {
         //add to list if user follows himself
         const addToList = (tweet) => {
             if (user.getFolloweds.includes(user.getUser.id)) {
-            tweets.value.unshift(tweet)
-            }   
+                tweets.value.unshift(tweet)
+            }
         }
 
 

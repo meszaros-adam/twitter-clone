@@ -1,13 +1,14 @@
 import axios from "axios";
 
-export default function (method, url, data) {
+export default async function (method, url, data) {
     try {
-        return axios({
+        return await axios({
             method: method,
             url: url,
             data: data,
         })
     } catch (e) {
+        console.log(e)
         return e.response
     }
 }
