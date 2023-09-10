@@ -1,6 +1,6 @@
 <template>
     <div class="centering-on-desktop">
-        <writeTweetVue></writeTweetVue>
+        <writeTweetVue @newTweet="addToList"></writeTweetVue>
         <div class="container">
             <feedNavigationVue></feedNavigationVue>
             <transition-group name="tweets" tag="ul">
@@ -61,14 +61,21 @@ export default {
 
         infiniteScroll(getTweets)
 
-
-
         const removeFromList = (id) => {
             tweets.value = tweets.value.filter((tweet) => tweet.retweet_id !== id)
         }
 
 
-        return { tweets, showLoading, removeFromList }
+
+        //add to list if user follows himself
+        const addToList = (tweet) => {
+            if (user.getFolloweds.includes(user.getUser.id)) {
+            tweets.value.unshift(tweet)
+            }   
+        }
+
+
+        return { tweets, showLoading, removeFromList, addToList }
     }
 }
 </script>

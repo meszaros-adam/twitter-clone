@@ -12,6 +12,9 @@ export const useUserStore = defineStore('user', {
     getters: {
         getUser(state) {
             return state.user
-        }
+        },
+        getFolloweds(state) {
+            return state.user.followeds.map((followed) => followed.followed_id)
+        },
     }
 }); 
