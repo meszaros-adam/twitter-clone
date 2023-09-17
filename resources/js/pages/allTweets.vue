@@ -5,7 +5,8 @@
             <feedNavigationVue></feedNavigationVue>
             <transition-group name="tweets" tag="ul">
                 <tweetVue v-for="tweet in tweets" :key="[tweet.id, tweet.retweet_id].toString()" :tweet="tweet"
-                    @retweetRemoved="removeFromList" @retweetCreated="addToList">
+                    @retweetRemoved="removeFromList" @retweetCreated="addToList"
+                    @commentButtonClicked="showingTweetModal(tweet)">
                 </tweetVue>
             </transition-group>
             <div v-if="showLoading" class="flex justify-center">
@@ -13,17 +14,19 @@
             </div>
         </div>
     </div>
+    <tweetModalVue v-if="showTweetModal" :tweet="tweetValue" @closeModal="showTweetModal = false"></tweetModalVue>
 </template>
 
 <script>
 import { ref } from 'vue';
 import callApi from '../composables/callApi';
-import feedNavigationVue from './components/feedNavigation.vue'
+import feedNavigationVue from './components/feedNavigation.vue';
 import writeTweetVue from './components/writeTweet.vue';
 import tweetVue from './components/tweet.vue';
 import infiniteScroll from '../composables/infiniteScroll'
+import tweetModalVue from './components/tweetModal.vue';
 export default {
-    components: { tweetVue, writeTweetVue, feedNavigationVue },
+    components: { tweetVue, writeTweetVue, feedNavigationVue, tweetModalVue },
     setup() {
 
         //tweet loading
@@ -62,7 +65,17 @@ export default {
             tweets.value.unshift(tweet)
         }
 
-        return { tweets, showLoading, removeFromList, addToList }
+        //show Tweet Modal
+
+        const tweetValue = ref({})
+        const showTweetModal = ref(false)
+
+        const showingTweetModal = (tweet) => {
+            tweetValue.value = tweet
+            showTweetModal.value = true
+        }
+
+        return { tweets, showLoading, removeFromList, addToList, showTweetModal, tweetValue, showingTweetModal }
     }
 }
 </script>

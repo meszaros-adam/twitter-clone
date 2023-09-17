@@ -36,7 +36,7 @@
                         <i class="fa-solid fa-retweet" title="Retweet"></i>
                     </router-link>
                 </div>
-                <i class="fa-regular fa-comments" title="Comments"></i>
+                <i @click="$emit('commentButtonClicked')" class="fa-regular fa-comments" title="Comments"></i>
             </div>
         </div>
     </div>
