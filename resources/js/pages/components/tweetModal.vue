@@ -1,24 +1,44 @@
 <template>
     <div>
         <div class="modal">
-            <div class="flex close-button">
-                <button @click="$emit('closeModal')" class="button">
-                    Close
-                </button>
+            <div class="modal-container container rounded">
+                <tweetVue :tweet="tweet"></tweetVue>
+                <h1>Comments</h1>
+                <hr>
+                <div class="container comments rounded">
+                    <div class="container">
+                        <textarea name="comment" id="" cols="30" rows="10" placeholder="Write comment!"></textarea>
+                        <div class="flex justify-end">
+                            <button @click="sendComment" class="button">Send comment</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <tweetVue :tweet="tweet"></tweetVue>
         </div>
-        <div @click="$emit('closeModal')" class="overlay"></div>
+        <div class="overlay"></div>
+        <button @click="$emit('closeModal')" class="close-button button">
+            Close
+        </button>
     </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 import tweetVue from './tweet.vue';
+import callApi from '../../composables/callApi';
 export default {
     props: ["tweet"],
     components: { tweetVue },
     setup() {
+
+        const comment = ref('')
+
+        const comments = ref([])
+
+        const sendComment = async () =>{
+            const res = await callApi('post', '/create_comment', comment.value)
+        }
 
     }
 
@@ -47,10 +67,23 @@ export default {
     position: fixed;
     top: 20%;
     z-index: 2;
+
 }
 
-.flex.close-button {
-    justify-content: end;
-    margin: 1rem;
+.modal-container {
+    background-color: #61677A;
 }
+
+.close-button {
+    position: fixed;
+    right: 40px;
+    top: 40px;
+    z-index: 2;
+}
+
+h1 {
+    margin-top: 3rem;
+}
+
+.comments {}
 </style>
