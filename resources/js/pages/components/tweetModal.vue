@@ -12,6 +12,17 @@
                         <div class="flex justify-end">
                             <button @click="sendComment" class="button">Send comment</button>
                         </div>
+                        <div v-for="comment in comments" :key="comment.id" class="comment container rounded">
+                            <div class="nickname">
+                                <div>
+                                    {{ comment.user.nickname }}
+                                </div>
+                                <hr>
+                            </div>
+                            <div>
+                                {{ comment.text }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,7 +55,7 @@ export default {
             const res = await callApi('post', '/create_comment', { 'text': comment.value, 'tweet_id': tweet.id })
 
             if (res.status == 201) {
-                comments.unshift(res.data)
+                comments.value.unshift(res.data)
             } else {
                 console.log('Failed to send comment!')
             }
@@ -97,5 +108,12 @@ h1 {
     margin-top: 3rem;
 }
 
-.comments {}
+.comment {
+    background-color: black;
+    color: whitesmoke;
+}
+
+.comment .nickname {
+    margin-bottom: 1rem;
+}
 </style>

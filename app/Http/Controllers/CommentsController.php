@@ -13,13 +13,13 @@ class CommentsController extends Controller
 
         $this->validate($request, [
             'text' => 'required|min:3',
-            'tweet_id' =>'required|int'
+            'tweet_id' => 'required|int'
         ]);
 
         return Comment::create([
             'text' => $request->text,
             'tweet_id' => $request->tweet_id,
             'user_id' => Auth::user()->id,
-        ]);
+        ])->load('user');
     }
 }
