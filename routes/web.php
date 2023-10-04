@@ -36,6 +36,8 @@ Route::get('/get_followed_list', [\App\Http\Controllers\FollowsController::class
 Route::post('/create_retweet', [\App\Http\Controllers\RetweetsController::class, 'createRetweet'])->middleware(Authenticate::class);
 Route::post('/delete_retweet', [\App\Http\Controllers\RetweetsController::class, 'deleteRetweet'])->middleware(Authenticate::class);
 
+Route::post('/create_comment', [\App\Http\Controllers\CommentsController::class, 'createComment'])->middleware(Authenticate::class);
+
 Route::fallback(function () {
     return view('app');
 });

@@ -7,7 +7,8 @@
                 <hr>
                 <div class="container comments rounded">
                     <div class="container">
-                        <textarea name="comment" id="" cols="30" rows="10" placeholder="Write comment!"></textarea>
+                        <textarea v-model="comment" name="comment" id="" cols="30" rows="10"
+                            placeholder="Write comment!"></textarea>
                         <div class="flex justify-end">
                             <button @click="sendComment" class="button">Send comment</button>
                         </div>
@@ -30,15 +31,26 @@ import callApi from '../../composables/callApi';
 export default {
     props: ["tweet"],
     components: { tweetVue },
-    setup() {
+    setup(props) {
 
-        const comment = ref('')
+        const tweet = props.tweet
 
         const comments = ref([])
 
-        const sendComment = async () =>{
-            const res = await callApi('post', '/create_comment', comment.value)
+        const comment = ref('')
+
+        const sendComment = async () => {
+
+            const res = await callApi('post', '/create_comment', { 'text': comment.value, 'tweet_id': tweet.id })
+
+            if (res.status == 201) {
+                comments.unshift(res.data)
+            } else {
+                console.log('Failed to send comment!')
+            }
         }
+
+        return { comment, comments, sendComment }
 
     }
 
@@ -56,7 +68,7 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(3px);
-    z-index: 1;
+    z-index: 100;
 }
 
 .modal {
@@ -66,8 +78,8 @@ export default {
     width: 100%;
     position: fixed;
     top: 20%;
-    z-index: 2;
-
+    z-index: 101;
+    transition: all 3s ease-in-out;
 }
 
 .modal-container {
@@ -78,7 +90,7 @@ export default {
     position: fixed;
     right: 40px;
     top: 40px;
-    z-index: 2;
+    z-index: 100;
 }
 
 h1 {
