@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
+
     public $fillable = ['text', 'user_id', 'tweet_id'];
+    public $with = ['user'];
 
     public function user()
     {

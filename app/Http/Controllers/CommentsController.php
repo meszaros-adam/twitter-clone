@@ -22,4 +22,12 @@ class CommentsController extends Controller
             'user_id' => Auth::user()->id,
         ])->load('user');
     }
+    public function getComments(Request $request)
+    {
+        $this->validate($request, [
+            'tweet_id' => 'required|int'
+        ]);
+
+        return Comment::where('tweet_id', $request->tweet_id)->get();
+    }
 }

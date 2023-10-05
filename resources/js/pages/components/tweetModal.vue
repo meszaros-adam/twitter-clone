@@ -61,6 +61,18 @@ export default {
             }
         }
 
+        const getComments = async () =>{
+            const res = await callApi('get', `/get_comments?tweet_id=${tweet.id}`)
+
+            if (res.status == 200){
+                comments.value.push(...res.data)
+            }else{
+                console.log('Failed to load comments!')
+            }
+        }
+
+        getComments()
+
         return { comment, comments, sendComment }
 
     }
@@ -81,20 +93,21 @@ export default {
     backdrop-filter: blur(3px);
     z-index: 100;
 }
-
 .modal {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
     position: fixed;
-    top: 20%;
+    top: 10%;
     z-index: 101;
     transition: all 3s ease-in-out;
 }
 
 .modal-container {
     background-color: #61677A;
+    max-height: calc(80vh);
+    overflow-y: auto;
 }
 
 .close-button {
