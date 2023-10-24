@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="modal">
-            <div class="modal-container container rounded">
+            <div @scroll="scrollModal" id="modal" class="modal-container container rounded">
                 <tweetVue :tweet="tweet"></tweetVue>
                 <h1>Comments</h1>
                 <hr>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import tweetVue from './tweet.vue';
 import callApi from '../../composables/callApi';
 export default {
@@ -61,19 +61,38 @@ export default {
             }
         }
 
-        const getComments = async () =>{
-            const res = await callApi('get', `/get_comments?tweet_id=${tweet.id}`)
+        const currentPage = ref(0);
+        const lastPage = ref(1);
 
-            if (res.status == 200){
-                comments.value.push(...res.data)
-            }else{
-                console.log('Failed to load comments!')
+        const getComments = async () => {
+
+            if (lastPage.value > currentPage.value) {
+                currentPage.value++
+                const res = await callApi('get', `/get_comments?tweet_id=${tweet.id}&page=${currentPage.value}`)
+
+                if (res.status == 200) {
+                    comments.value.push(...res.data.data)
+                    lastPage.value = res.data.last_page
+                } else {
+                    console.log('Failed to load comments!')
+                }
             }
         }
 
         getComments()
 
-        return { comment, comments, sendComment }
+        //infinite scrolling
+
+        const scrollModal = () => {
+            const modal = document.getElementById("modal")
+            if (Math.ceil(modal.scrollTop + modal.offsetHeight) >= modal.scrollHeight) {
+                getComments()
+            }
+        }
+
+
+
+        return { comment, comments, sendComment, scrollModal }
 
     }
 
@@ -93,6 +112,7 @@ export default {
     backdrop-filter: blur(3px);
     z-index: 100;
 }
+
 .modal {
     display: flex;
     flex-direction: column;

@@ -28,6 +28,6 @@ class CommentsController extends Controller
             'tweet_id' => 'required|int'
         ]);
 
-        return Comment::where('tweet_id', $request->tweet_id)->get();
+        return Comment::where('tweet_id', $request->tweet_id)->paginate(10);
     }
 }
