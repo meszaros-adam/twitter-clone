@@ -23,6 +23,9 @@
                                 {{ comment.text }}
                             </div>
                         </div>
+                        <div v-if="showLoading" class="flex justify-center">
+                            <img class="loading-animation" src="/images/Spin-1.2s-200px.svg" alt="Loading animation">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,10 +66,12 @@ export default {
 
         const currentPage = ref(0);
         const lastPage = ref(1);
+        const showLoading = ref(false)
 
         const getComments = async () => {
 
             if (lastPage.value > currentPage.value) {
+                showLoading.value = true
                 currentPage.value++
                 const res = await callApi('get', `/get_comments?tweet_id=${tweet.id}&page=${currentPage.value}`)
 
@@ -76,6 +81,7 @@ export default {
                 } else {
                     console.log('Failed to load comments!')
                 }
+                showLoading.value = false
             }
         }
 
@@ -92,7 +98,7 @@ export default {
 
 
 
-        return { comment, comments, sendComment, scrollModal }
+        return { comment, comments, sendComment, scrollModal, showLoading }
 
     }
 
