@@ -14,9 +14,9 @@
                         </div>
                         <div v-for="comment in comments" :key="comment.id" class="comment container rounded">
                             <div class="nickname">
-                                <div>
-                                    {{ comment.user.nickname }}
-                                </div>
+                                <router-link :to="{ name: 'Profile', params: { id: tweet.user.id } }">
+                                    {{ tweet.user.nickname }}
+                                </router-link>
                                 <hr>
                             </div>
                             <div>
