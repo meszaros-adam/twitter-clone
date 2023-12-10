@@ -11,7 +11,7 @@
 <script>
 import { ref } from 'vue';
 import alertVue from './alert.vue'
-import callApi from '../../composables/callApi';
+import callApi from '../composables/callApi';
 export default {
     components: { alertVue },
     //props and context both needed to emit

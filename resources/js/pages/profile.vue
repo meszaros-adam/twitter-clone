@@ -20,7 +20,7 @@
 <script>
 import { useRoute } from 'vue-router'
 import callApi from '../composables/callApi'
-import tweetVue from './components/tweet.vue'
+import tweetVue from '../components/tweet.vue'
 import infiniteScroll from '../composables/infiniteScroll'
 import { useFollowedsStore } from '../stores/followeds'
 import { ref, computed, toRaw } from 'vue'

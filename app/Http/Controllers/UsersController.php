@@ -55,4 +55,18 @@ class UsersController extends Controller
     {
         return User::find($request->id);
     }
+    public function updateUser(Request $request){
+        $this->validate($request,[
+            'nickname' => 'required|min:4',
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        $user = User::where('id', $request->id);
+
+        return $user->update([
+            'nickname' => $request->nickname,
+            'email' =>$request->email,
+        ]);
+    }
 }

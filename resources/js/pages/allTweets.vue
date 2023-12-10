@@ -20,11 +20,11 @@
 <script>
 import { ref } from 'vue';
 import callApi from '../composables/callApi';
-import feedNavigationVue from './components/feedNavigation.vue';
-import writeTweetVue from './components/writeTweet.vue';
-import tweetVue from './components/tweet.vue';
+import feedNavigationVue from '../components/feedNavigation.vue';
+import writeTweetVue from '../components/writeTweet.vue';
+import tweetVue from '../components/tweet.vue';
 import infiniteScroll from '../composables/infiniteScroll'
-import tweetModalVue from './components/tweetModal.vue';
+import tweetModalVue from '../components/tweetModal.vue';
 export default {
     components: { tweetVue, writeTweetVue, feedNavigationVue, tweetModalVue },
     setup() {

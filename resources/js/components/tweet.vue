@@ -44,9 +44,9 @@
 
 <script>
 import { computed, ref } from 'vue'
-import callApi from '../../composables/callApi'
-import { useRetweetsStore } from '../../stores/retweets'
-import { useUserStore } from '../../stores/user'
+import callApi from '../composables/callApi'
+import { useRetweetsStore } from '../stores/retweets'
+import { useUserStore } from '../stores/user'
 export default {
     props: ["tweet"],
     setup(props, context) {

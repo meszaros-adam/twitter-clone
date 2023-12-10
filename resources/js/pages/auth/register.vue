@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import alertVue from '../components/alert.vue';
+import alertVue from '../../components/alert.vue';
 import { ref } from "vue";
 import callApi from '../../composables/callApi';
 import validateEmail from '../../composables/validateEmail'

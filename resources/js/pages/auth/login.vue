@@ -4,8 +4,8 @@
             <h1>Login</h1>
             <alertVue :text="alertText"></alertVue>
             <div class="input-group">
-                <label for="nickname">Email:</label>
-                <input v-model="loginData.email" type="email" id="nickname" name="nickname">
+                <label for="email">Email:</label>
+                <input v-model="loginData.email" type="text" id="email" name="email">
             </div>
             <div class="input-group">
                 <label for="password">Password:</label>
@@ -24,7 +24,7 @@
 
 <script>
 import { ref } from 'vue';
-import alertVue from '../components/alert.vue';
+import alertVue from '../../components/alert.vue'
 import callApi from '../../composables/callApi';
 import validateEmail from '../../composables/validateEmail';
 export default {

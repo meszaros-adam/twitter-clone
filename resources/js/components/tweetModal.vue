@@ -41,7 +41,7 @@
 <script>
 import { ref, onMounted } from 'vue';
 import tweetVue from './tweet.vue';
-import callApi from '../../composables/callApi';
+import callApi from '../composables/callApi';
 export default {
     props: ["tweet"],
     components: { tweetVue },

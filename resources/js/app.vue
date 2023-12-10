@@ -13,9 +13,17 @@
             <div>
                 <div v-if="user">
                     <router-link :to="{ name: 'Profile', params: { id: user.id } }" class="rounded">
-                        {{ user.nickname }}
+                        <i class="fa-solid fa-user"></i>
+                        <div> {{ user.nickname }}</div>
                     </router-link>
-                    <a href="/auth/logout" class="rounded">Logout</a>
+                    <router-link :to="{ name: 'Settings', params: { id: user.id } }" class="rounded">
+                        <i class="fa-solid fa-bars"></i>
+                        <div>Settings</div>
+                    </router-link>
+                    <a href="/auth/logout" class="rounded">
+                        <i class="fa-solid fa-door-open"></i>
+                        <div>Logout</div>
+                    </a>
                 </div>
                 <div v-else>
                     <router-link to="/login" class="rounded">Login</router-link>

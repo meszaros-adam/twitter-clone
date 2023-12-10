@@ -4,6 +4,7 @@ import Register from './pages/auth/register.vue'
 import Feed from './pages/feed.vue'
 import AllTweets from './pages/allTweets.vue'
 import Profile from './pages/profile.vue'
+import Settings from './pages/settings.vue'
 
 const routes = [
     {
@@ -30,6 +31,11 @@ const routes = [
         path: "/profile/:id",
         name: "Profile",
         component: Profile,
+    },
+    {
+        path: "/settings/:id",
+        name: "Settings",
+        component: Settings,
     },
 
 ];
