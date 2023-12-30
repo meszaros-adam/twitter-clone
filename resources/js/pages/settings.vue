@@ -52,7 +52,11 @@ export default {
 
         const userStore = useUserStore()
         const alertText = ref('')
-        const user = ref(userStore.getUser)
+        const user = ref({
+            nickname: userStore.getUser.nickname,
+            email: userStore.getUser.email,
+            password: userStore.getUser.password,
+        })
 
 
         const updateProfile = async () => {
@@ -63,6 +67,9 @@ export default {
 
             if (res.status == 200) {
 
+                //this part isnt working yet
+                console.log(res.data)
+                userStore.add(res.data)
             } else {
 
             }
@@ -76,15 +83,15 @@ export default {
         const updatePassword = async () => {
             if (newPassword.value.trim().length < 6) return console.log('Password must be at least 6 characters!')
             if (newPassword.value !== newPasswordConfirmation.value) return console.log('Passwords must be at the same!')
-            if (oldPassword.value.trim().length < 6) return console.log('Password must be at least 6 characters!')
-            const res = await callApi('post', '/update_user', {
+            if (oldPassword.value.trim().length < 6) return console.log('Old password must be at least 6 characters!')
+            const res = await callApi('post', '/update_password', {
                 new_password: newPassword.value,
                 new_password_confirmation: newPasswordConfirmation.value,
                 old_password: oldPassword.value
             })
 
             if (res.status == 200) {
-
+                window.location = '/login';
             }
             else {
 

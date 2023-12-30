@@ -55,18 +55,40 @@ class UsersController extends Controller
     {
         return User::find($request->id);
     }
-    public function updateUser(Request $request){
-        $this->validate($request,[
+    public function updateUser(Request $request)
+    {
+        $this->validate($request, [
             'nickname' => 'required|min:4',
             'email' => 'required|email',
             'password' => 'required|min:6'
         ]);
 
-        $user = User::where('id', $request->id);
+        $user = User::find(Auth::user()->id);
 
-        return $user->update([
+        $user->update([
             'nickname' => $request->nickname,
-            'email' =>$request->email,
+            'email' => $request->email,
         ]);
+
+        return $user;
+    }
+    public function updatePassword(Request $request)
+    {
+        $this->validate($request, [
+            'new_password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = User::find(Auth::user()->id);
+
+        if (Hash::check($request->old_password, $user->password)) {
+            $user->password = Hash::make($request->new_password);
+
+            $user->save();
+
+            Auth::logout();
+            return response('Password changed succesfully!', 200);
+        } else {
+            return response('Old password was wrong!', 401);
+        }
     }
 }

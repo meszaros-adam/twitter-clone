@@ -24,7 +24,8 @@ Route::prefix('/auth')->group(function () {
 Route::post('/create_tweet', [App\Http\Controllers\TweetsController::class, 'create'])->middleware(Authenticate::class);
 
 Route::get('/get_user', [App\Http\Controllers\UsersController::class, 'getUser']);
-Route::post('/update_user', [App\Http\Controllers\UsersController::class, 'updateUser']);
+Route::post('/update_user', [App\Http\Controllers\UsersController::class, 'updateUser'])->middleware(Authenticate::class);
+Route::post('/update_password', [App\Http\Controllers\UsersController::class, 'updatePassword'])->middleware(Authenticate::class);
 
 Route::get('/get_tweets_by_user', [App\Http\Controllers\TweetsController::class, 'getByUser']);
 Route::get('/get_tweets_by_follow', [App\Http\Controllers\TweetsController::class, 'getFolloweds'])->middleware(Authenticate::class);
