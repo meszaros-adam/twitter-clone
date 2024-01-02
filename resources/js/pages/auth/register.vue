@@ -30,9 +30,13 @@ import alertVue from '../../components/alert.vue';
 import { ref } from "vue";
 import callApi from '../../composables/callApi';
 import validateEmail from '../../composables/validateEmail'
+import { useNotification } from "@kyvg/vue3-notification";
 export default {
     components: { alertVue },
     setup() {
+
+        const { notify } = useNotification()
+
         const registerData = ref({
             nickname: '',
             email: '',
@@ -42,7 +46,11 @@ export default {
 
         const registration = async () => {
 
-            if (registerData.value.nickname.trim().length < 4) return showAlert('Nickname must be at least 4 characters!')
+            if (registerData.value.nickname.trim().length < 4) return notify({
+                type: "error",
+                title: "Nickname",
+                text: "Nickname must be at least 4 characters!",
+            });
             if (!validateEmail(registerData.value.email.trim())) return showAlert('Email must be a valid email!')
             if (registerData.value.password.trim().length < 6) return showAlert('Password must be at least 6 characters!')
             if (registerData.value.password != registerData.value.password_confirmation) return showAlert('The passwords do not match!')
@@ -53,6 +61,11 @@ export default {
                 console.log('Sucessfull registration!')
                 window.location.href = '/login'
             } else {
+                notify({
+                    type: "error",
+                    title: "Registration",
+                    text: "Registration failed!",
+                });
                 console.log('Registration failed!')
             }
         }

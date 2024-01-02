@@ -40,6 +40,7 @@
         </footer>
         <button id="up-arrow" @click="scrollUp" class="up-arrow">🠕</button>
     </div>
+    <notifications classes="vue-notification" />
 </template>
 
 <script>
@@ -132,4 +133,33 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.vue-notification {
+    margin: 0 5px 5px;
+    padding: 20px;
+    font-size: 20px;
+    color: #ffffff;
+
+    background: var(--mainColor);
+    border-left: 5px solid #187fe7;
+    border-radius: var(--borderRadius);
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+
+    &.success {
+        background: #080808;
+        border-left-color: #1f9741;
+    }
+
+    &.warn {
+        background: #ffb648;
+        border-left-color: #f48a06;
+    }
+
+    &.error {
+        background: #e54d42;
+        border-left-color: #b82e24;
+    }
+}
+</style>
