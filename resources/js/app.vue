@@ -136,9 +136,13 @@ export default {
 <style>
 .vue-notification {
     margin: 0 5px 5px;
-    padding: 20px;
-    font-size: 20px;
+    padding: 10px;
     color: #ffffff;
+    width: 300px;
+    height: 100px;
+    font-size: 20px !important;
+    text-align: center;
+
 
     background: var(--mainColor);
     border-left: 5px solid #187fe7;
@@ -146,20 +150,22 @@ export default {
     position: fixed;
     left: 20px;
     bottom: 20px;
+}
 
-    &.success {
-        background: #080808;
-        border-left-color: #1f9741;
-    }
+.vue-notification.success {
+    background: #080808;
+    border-left-color: #1f9741;
+}
 
-    &.warn {
-        background: #ffb648;
-        border-left-color: #f48a06;
-    }
+.vue-notification.warning {
+    background: #ffb648;
+    border-left-color: #f48a06;
+    color: black;
+}
 
-    &.error {
-        background: #e54d42;
-        border-left-color: #b82e24;
-    }
+.vue-notification.error {
+    background: #e54d42;
+    border-left-color: #b82e24;
+
 }
 </style>

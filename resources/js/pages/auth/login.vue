@@ -2,7 +2,6 @@
     <div class="container">
         <div class="auth-form container">
             <h1>Login</h1>
-            <alertVue :text="alertText"></alertVue>
             <div class="input-group">
                 <label for="email">Email:</label>
                 <input v-model="loginData.email" type="text" id="email" name="email">
@@ -24,13 +23,14 @@
 
 <script>
 import { ref } from 'vue';
-import alertVue from '../../components/alert.vue'
 import callApi from '../../composables/callApi';
 import validateEmail from '../../composables/validateEmail';
+import { useNotification } from "@kyvg/vue3-notification";
 export default {
-    components: { alertVue },
-
     setup() {
+
+        const { notify } = useNotification()
+
         const loginData = ref({
             email: "",
             password: "",
@@ -38,26 +38,38 @@ export default {
         })
 
         const login = async () => {
-            if (!validateEmail(loginData.value.email.trim())) return showAlert('Email must be a valid email!')
-            if (loginData.value.password.trim().length < 6) return showAlert('Password must be at least 6 characters!')
+            if (!validateEmail(loginData.value.email.trim())) return notify({
+                type: "warning",
+                title: "Email",
+                text: "Email must be a valid email!",
+            });
+            if (loginData.value.password.trim().length < 6) return notify({
+                type: "warning",
+                title: "Password",
+                text: "Password must be at least 6 characters!",
+            });
 
             const res = await callApi('post', '/auth/login', loginData.value)
 
             if (res.status == 200) {
-                window.location.href = '/';
+                notify({
+                    type: "success",
+                    title: "Successful login!",
+                });
+
+                setTimeout(function () {
+                    window.location.href = '/';
+                }, 3000);
+
             } else {
-                console.log('Login failed!')
+                notify({
+                    type: "error",
+                    title: "Login failed",
+                });
             }
         }
 
-        const alertText = ref('')
-
-        const showAlert = (text) => {
-            alertText.value = text
-        }
-
-
-        return { loginData, alertText, login }
+        return { loginData, login }
     }
 }
 </script>

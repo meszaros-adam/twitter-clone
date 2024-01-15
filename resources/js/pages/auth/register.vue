@@ -2,7 +2,6 @@
     <div class="container">
         <div class="auth-form container">
             <h1>Register</h1>
-            <alertVue :text="alertText"></alertVue>
             <div class="input-group">
                 <label for="nickname">Nickname:</label>
                 <input v-model="registerData.nickname" type="text" id="nickname" name="nickname">
@@ -26,13 +25,11 @@
 </template>
 
 <script>
-import alertVue from '../../components/alert.vue';
 import { ref } from "vue";
 import callApi from '../../composables/callApi';
 import validateEmail from '../../composables/validateEmail'
 import { useNotification } from "@kyvg/vue3-notification";
 export default {
-    components: { alertVue },
     setup() {
 
         const { notify } = useNotification()
@@ -47,37 +44,51 @@ export default {
         const registration = async () => {
 
             if (registerData.value.nickname.trim().length < 4) return notify({
-                type: "error",
+                type: "warning",
                 title: "Nickname",
                 text: "Nickname must be at least 4 characters!",
             });
-            if (!validateEmail(registerData.value.email.trim())) return showAlert('Email must be a valid email!')
-            if (registerData.value.password.trim().length < 6) return showAlert('Password must be at least 6 characters!')
-            if (registerData.value.password != registerData.value.password_confirmation) return showAlert('The passwords do not match!')
+            if (!validateEmail(registerData.value.email.trim())) return notify({
+                type: "warning",
+                title: "Email",
+                text: "Email must be a valid email!",
+            });
+            if (registerData.value.password.trim().length < 6) return notify({
+                type: "warning",
+                title: "Nickname",
+                text: "Password must be at least 6 characters!",
+            });
+            if (registerData.value.password != registerData.value.password_confirmation)
+                return notify({
+                    type: "warning",
+                    title: "Password",
+                    text: "The passwords do not match!",
+                });
 
             const res = await callApi('post', '/auth/register', registerData.value)
 
             if (res.status == 201) {
-                console.log('Sucessfull registration!')
-                window.location.href = '/login'
+                notify({
+                    type: "success",
+                    title: "Registration",
+                    text: "Successful registration!",
+                });
+
+
+                setTimeout(function () {
+                    window.location.href = '/login'
+                }, 3000);
             } else {
                 notify({
                     type: "error",
                     title: "Registration",
                     text: "Registration failed!",
                 });
-                console.log('Registration failed!')
             }
         }
 
-        const alertText = ref('')
+        return { registerData, registration }
 
-        const showAlert = (text) => {
-            alertText.value = text
-
-        }
-
-        return { registerData, registration, alert, alertText }
     }
 }
 </script>
