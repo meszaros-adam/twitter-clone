@@ -25,6 +25,7 @@ import infiniteScroll from '../composables/infiniteScroll'
 import feedNavigationVue from '../components/feedNavigation.vue';
 import tweetModalVue from '../components/tweetModal.vue';
 import { useUserStore } from '../stores/user';
+import { useNotification } from "@kyvg/vue3-notification";
 export default {
     components: { tweetVue, writeTweetVue, feedNavigationVue, tweetModalVue },
     setup(props) {
@@ -36,6 +37,7 @@ export default {
         const showLoading = ref(false)
         const currentPage = ref(0)
         const user = useUserStore()
+        const { notify } = useNotification()
 
         const getTweets = async () => {
 
@@ -50,9 +52,20 @@ export default {
                     lastPage.value = res.data.last_page
                 }
                 else if (res.status == 401) {
-                    window.location = '/login'
-                } else {
+                    notify({
+                        type: "warning",
+                        title: "You must login to see feed!",
+                    });
 
+                    setTimeout(function () {
+                        window.location.href = '/login';
+                    }, 3000);
+
+                } else {
+                    notify({
+                        type: "error",
+                        title: "Failed to load feed!",
+                    });
                 }
                 showLoading.value = false
 
