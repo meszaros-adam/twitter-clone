@@ -25,6 +25,7 @@ import writeTweetVue from '../components/writeTweet.vue';
 import tweetVue from '../components/tweet.vue';
 import infiniteScroll from '../composables/infiniteScroll'
 import tweetModalVue from '../components/tweetModal.vue';
+import { useNotification } from "@kyvg/vue3-notification";
 export default {
     components: { tweetVue, writeTweetVue, feedNavigationVue, tweetModalVue },
     setup() {
@@ -35,6 +36,7 @@ export default {
         const lastPage = ref(1)
         const showLoading = ref(false)
         const currentPage = ref(0)
+        const { notify } = useNotification()
 
         const getTweets = async () => {
 
@@ -48,6 +50,10 @@ export default {
                     tweets.value.push(...res.data.data)
                     lastPage.value = res.data.last_page
                 } else {
+                    notify({
+                        type: "error",
+                        title: "Failed to load tweets!",
+                    });
                 }
                 showLoading.value = false
             }
