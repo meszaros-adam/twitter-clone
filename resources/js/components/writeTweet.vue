@@ -12,14 +12,15 @@
 import { ref } from 'vue';
 import alertVue from './alert.vue'
 import callApi from '../composables/callApi';
+import { useNotification } from '@kyvg/vue3-notification';
 export default {
     components: { alertVue },
     //props and context both needed to emit
     setup(props, context) {
-        
+
+        const {notify} = useNotification()
         //tweet sending
         const newTweet = ref('')
-
         const alertText = ref('')
 
         const sendTweet = async () => {
@@ -32,8 +33,15 @@ export default {
             if (res.status == 201) {
                 newTweet.value = ""
                 context.emit('newTweet', res.data)
+                notify({
+                    type: "success",
+                    title: "Tweet created successfully!"
+                })
             } else {
-                console.log('Failed to send the tweet!')
+                notify({
+                    type: "error",
+                    title: "Failed to create tweet!"
+                })
             }
         }
 
