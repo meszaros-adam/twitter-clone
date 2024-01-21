@@ -52,6 +52,8 @@ export default {
     props: ["tweet"],
     setup(props, context) {
 
+        const { notify } = useNotification()
+
         const tweet = ref(props.tweet)
         const retweetStore = useRetweetsStore();
         const user = useUserStore().getUser
@@ -63,9 +65,17 @@ export default {
                 retweetStore.add(tweet.value.id)
 
                 context.emit('retweetCreated', res.data)
+
+                notify({
+                    type: "success",
+                    title: "Successful retweet!",
+                });
             }
             else {
-
+                notify({
+                    type: "error",
+                    title: "Retweet failed!",
+                });
             }
         }
 
@@ -76,11 +86,19 @@ export default {
             if (res.status == 200) {
                 retweetStore.remove(tweet.value.id)
 
+                notify({
+                    type: "success",
+                    title: "Retweet removed successfully!",
+                });
+
                 if (tweet.value.retweet_id) {
                     context.emit('retweetRemoved', tweet.value.retweet_id)
                 }
             } else {
-
+                notify({
+                    type: "error",
+                    title: "Failed to remove retweet!",
+                });
             }
         }
 
