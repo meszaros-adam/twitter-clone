@@ -3,7 +3,6 @@
         <div class="container">
             <div class="auth-form container">
                 <h1>User Data Settings</h1>
-                <alertVue :text="alertText"></alertVue>
                 <div class="input-group">
                     <label for="nickname">Nickname:</label>
                     <input v-model="user.nickname" type="text" id="nickname" name="nickname">
@@ -20,7 +19,6 @@
             </div>
             <div class="auth-form container">
                 <h1>Password Change</h1>
-                <alertVue :text="alertText"></alertVue>
                 <div class="input-group">
                     <label for="newPassword">New Password:</label>
                     <input v-model="newPassword" type="password" id="newPassword" name="newPassword">
@@ -42,16 +40,16 @@
 
 <script>
 import { ref } from "vue";
-import alertVue from "../components/alert.vue";
 import { useUserStore } from "../stores/user";
 import callApi from '../composables/callApi';
 import validateEmail from '../composables/validateEmail'
+import { useNotification } from "@kyvg/vue3-notification";
 export default {
-    components: { alertVue },
     setup() {
 
         const userStore = useUserStore()
-        const alertText = ref('')
+        const { notify } = useNotification()
+
         const user = ref({
             nickname: userStore.getUser.nickname,
             email: userStore.getUser.email,
@@ -60,9 +58,22 @@ export default {
 
 
         const updateProfile = async () => {
-            if (user.value.nickname.trim().length < 4) return console.log('Nickname must be at least 4 characters!')
-            if (!validateEmail(user.value.email.trim())) return console.log('Email must be a valid email!')
-            if (user.value.password.trim().length < 6) return console.log('Password must be at least 6 characters!')
+            if (user.value.nickname.trim().length < 4) return notify({
+                type: 'warning',
+                title: 'Nickname',
+                text: 'Nickname must be at least 4 characters!',
+            })
+            if (!validateEmail(user.value.email.trim())) return notify({
+                type: 'warning',
+                title: 'Email',
+                text: 'Email must be a valid email!',
+            })
+            if (user.value.password.trim().length < 6) return notify({
+                type: 'warning',
+                title: 'Password',
+                text: 'Password must be at least 6 characters!',
+            })
+
             const res = await callApi('post', '/update_user', user.value)
 
             if (res.status == 200) {
@@ -81,9 +92,22 @@ export default {
         const oldPassword = ref('')
 
         const updatePassword = async () => {
-            if (newPassword.value.trim().length < 6) return console.log('Password must be at least 6 characters!')
-            if (newPassword.value !== newPasswordConfirmation.value) return console.log('Passwords must be at the same!')
-            if (oldPassword.value.trim().length < 6) return console.log('Old password must be at least 6 characters!')
+            if (newPassword.value.trim().length < 6) return notify({
+                type: 'warning',
+                title: 'Password',
+                text: 'Password must be at least 6 characters!',
+            })
+            if (newPassword.value !== newPasswordConfirmation.value) return notify({
+                type: 'warning',
+                title: 'Password',
+                text: 'Passwords must be at the same!',
+            })
+            if (oldPassword.value.trim().length < 6) return notify({
+                type: 'warning',
+                title: 'Password',
+                text: 'Old password must be at least 6 characters!',
+            })
+
             const res = await callApi('post', '/update_password', {
                 new_password: newPassword.value,
                 new_password_confirmation: newPasswordConfirmation.value,
@@ -98,7 +122,7 @@ export default {
             }
         }
 
-        return { alertText, user, updateProfile, newPassword, newPasswordConfirmation, oldPassword, updatePassword }
+        return { user, updateProfile, newPassword, newPasswordConfirmation, oldPassword, updatePassword }
     }
 }
 </script>
