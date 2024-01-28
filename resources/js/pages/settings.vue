@@ -115,7 +115,10 @@ export default {
             })
 
             if (res.status == 200) {
-                window.location = '/login';
+
+                setTimeout(function () {
+                    window.location = '/login';
+                }, 3000)
             }
             else {
 
