@@ -23,11 +23,13 @@ import callApi from '../composables/callApi'
 import tweetVue from '../components/tweet.vue'
 import infiniteScroll from '../composables/infiniteScroll'
 import { useFollowedsStore } from '../stores/followeds'
-import { ref, computed, toRaw } from 'vue'
+import { ref, computed } from 'vue'
+import { useNotification } from "@kyvg/vue3-notification";
 export default {
     components: { tweetVue },
     setup() {
         const route = useRoute()
+        const { notify } = useNotification()
 
         const profile = ref(null)
         const getProfile = async () => {
@@ -36,9 +38,13 @@ export default {
             if (res.status == 200) {
                 profile.value = res.data
             } else {
-
+                notify({
+                    type: 'error',
+                    title: 'Failed to load profile!',
+                })
             }
         }
+
         getProfile()
 
         const tweets = ref([])
@@ -58,7 +64,10 @@ export default {
                     tweets.value.push(...res.data.data)
                     lastPage.value = res.data.last_page
                 } else {
-
+                    notify({
+                        type: 'error',
+                        title: 'Failed to load tweets!',
+                    })
                 }
                 showLoading.value = false
             }
@@ -75,10 +84,17 @@ export default {
             const res = await callApi('post', '/create_follow', { 'followed_id': route.params.id })
 
             if (res.status == 201) {
-                console.log('Succesful follow')
                 followedsStore.add(route.params.id)
+
+                notify({
+                    type: 'success',
+                    title: 'Profile followed!',
+                })
             } else {
-                console.log('Follow failed')
+                notify({
+                    type: 'error',
+                    title: 'Failed to follow!',
+                })
             }
         }
 
@@ -86,10 +102,17 @@ export default {
             const res = await callApi('post', '/delete_follow', { 'followed_id': route.params.id })
 
             if (res.status == 200) {
-                console.log('Succesful delete')
                 followedsStore.remove(route.params.id)
+
+                notify({
+                    type: 'success',
+                    title: 'Profile unfollowed!',
+                })
             } else {
-                console.log('Delete failed')
+                notify({
+                    type: 'error',
+                    title: 'Failed to unfollow!',
+                })
             }
         }
 
