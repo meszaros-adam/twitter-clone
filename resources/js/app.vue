@@ -14,7 +14,7 @@
                 <div v-if="user">
                     <router-link :to="{ name: 'Profile', params: { id: user.id } }" class="rounded">
                         <i class="fa-solid fa-user"></i>
-                        <div> {{ user.nickname }}</div>
+                        <div> {{ userStore.getUser.nickname }}</div>
                     </router-link>
                     <router-link :to="{ name: 'Settings', params: { id: user.id } }" class="rounded">
                         <i class="fa-solid fa-bars"></i>
@@ -126,7 +126,7 @@ export default {
 
         userStore.add(user.value)
 
-        return { scrollUp, user }
+        return { scrollUp, user, userStore}
     }
 
 
