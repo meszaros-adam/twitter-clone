@@ -60,8 +60,11 @@ class UsersController extends Controller
         $this->validate($request, [
             'nickname' => 'required|min:4',
             'email' => 'required|email',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'picture' => 'required'
         ]);
+
+        $request->file('picture')->store('pictures');
 
         $user = User::find(Auth::user()->id);
 
@@ -69,6 +72,8 @@ class UsersController extends Controller
             'nickname' => $request->nickname,
             'email' => $request->email,
         ]);
+
+        return ($request->picture);
 
         return $user;
     }

@@ -41,6 +41,8 @@ Route::post('/delete_retweet', [\App\Http\Controllers\RetweetsController::class,
 Route::post('/create_comment', [\App\Http\Controllers\CommentsController::class, 'createComment'])->middleware(Authenticate::class);
 Route::get('/get_comments', [\App\Http\Controllers\CommentsController::class, 'getComments']);
 
+Route::post('/upload-image', [\App\Http\Controllers\ImageController::class, 'upload']);
+
 Route::fallback(function () {
     return view('app');
 });

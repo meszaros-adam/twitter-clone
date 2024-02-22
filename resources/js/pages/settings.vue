@@ -15,6 +15,10 @@
                     <label for="password">Password:</label>
                     <input v-model="user.password" type="password" id="password" name="password">
                 </div>
+                <div class="input-group">
+                    <label for="profile-picture">Profile Picture:</label>
+                    <input type="file" id="picture" name="picture" ref="file" @change="onFileChange">
+                </div>
                 <button class="button" @click="updateProfile">Update Profile</button>
             </div>
             <div class="auth-form container">
@@ -54,7 +58,33 @@ export default {
             nickname: userStore.getUser.nickname,
             email: userStore.getUser.email,
             password: userStore.getUser.password,
+            picture: userStore.getUser.picture
         })
+
+        const onFileChange = (event) => {
+            user.value.picture = event.target.files[0]
+
+            let formData = new FormData()
+
+            formData.append('picture', user.value.picture)
+
+            const config = {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            };
+
+            const uploadPicture = async () => {
+                const res = await callApi('post', '/upload-image', formData)
+
+                if (res.status == 200){
+
+                }else{
+
+                }
+            }
+
+            uploadPicture()
+
+        }
 
 
         const updateProfile = async () => {
@@ -78,8 +108,6 @@ export default {
 
             if (res.status == 200) {
 
-                //this part isnt working yet
-                console.log(res.data)
                 userStore.add(res.data)
             } else {
 
@@ -125,7 +153,7 @@ export default {
             }
         }
 
-        return { user, updateProfile, newPassword, newPasswordConfirmation, oldPassword, updatePassword }
+        return { user, updateProfile, newPassword, newPasswordConfirmation, oldPassword, updatePassword, onFileChange }
     }
 }
 </script>
